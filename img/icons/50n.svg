@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" preserveAspectRatio="xMinYMin meet">
+	<defs>
+		<filter id="a" color-interpolation-filters="sRGB">
+			<feFlood result="flood" flood-color="#000" flood-opacity=".2"/>
+			<feComposite result="composite1" operator="in" in2="SourceGraphic" in="flood"/>
+			<feGaussianBlur result="blur" stdDeviation=".2" in="composite1"/>
+			<feOffset result="offset" dy=".3"/>
+			<feComposite result="composite2" in2="offset" in="SourceGraphic"/>
+		</filter>
+	</defs>
+	<path d="M2,4h25m0,7h-25m0,7h25m0,7h-25" stroke="#fefefe" stroke-width="4" filter="url(#a)"/>
+</svg>

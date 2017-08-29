@@ -1,0 +1,752 @@
+[
+    {
+        "city": "Abnub, Egypt",
+        "id": 362973
+    },
+    {
+        "city": "Abu al Matamir, Egypt",
+        "id": 362882
+    },
+    {
+        "city": "Abu Kabir, Egypt",
+        "id": 362485
+    },
+    {
+        "city": "Abu Qurqas, Egypt",
+        "id": 362277
+    },
+
+    {
+        "city": "Abu Tij, Egypt",
+        "id": 362004
+    },
+    {
+        "city": "Abū Ḩammād al Maḩaţţah, Egypt",
+        "id": 362610
+    },
+    {
+        "city": "Ad Dilinjat, Egypt",
+        "id": 361827
+    },
+    {
+        "city": "Ain Sukhna, Egypt",
+        "id": 7521348
+    },
+    {
+        "city": "Aja, Egypt",
+        "id": 361702
+    },
+    {
+        "city": "Akhmim, Egypt",
+        "id": 361661
+    },
+    {
+        "city": "Al Alamayn, Egypt",
+        "id": 361612
+    },
+    {
+        "city": "Al Amal (Nimrah Thamāniyah), Egypt",
+        "id": 432887
+    },
+    {
+        "city": "Al Arish, Egypt",
+        "id": 361546
+    },
+    {
+        "city": "Al Ayyat, Egypt",
+        "id": 361495
+    },
+    {
+        "city": "Al Badari, Egypt",
+        "id": 361478
+    },
+    {
+        "city": "Al Bajur, Egypt",
+        "id": 361457
+    },
+    {
+        "city": "Al Balyana, Egypt",
+        "id": 361435
+    },
+    {
+        "city": "Al Bawiti, Egypt",
+        "id": 361394
+    },
+    {
+        "city": "Al Fashn, Egypt",
+        "id": 361329
+    },
+    {
+        "city": "Al Fayyum, Egypt",
+        "id": 361320
+    },
+    {
+        "city": "Al Ghardaqah, Egypt",
+        "id": 361291
+    },
+    {
+        "city": "Al Hamul, Egypt",
+        "id": 361213
+    },
+    {
+        "city": "Al Hawamidiyah, Egypt",
+        "id": 361179
+    },
+    {
+        "city": "Al Ibrahimiyah, Egypt",
+        "id": 361103
+    },
+    {
+        "city": "Al Jamaliyah, Egypt",
+        "id": 361029
+    },
+    {
+        "city": "Al Janādilah, Egypt",
+        "id": 361024
+    },
+    {
+        "city": "Al Jizah, Egypt",
+        "id": 360995
+    },
+    {
+        "city": "Al Jubayl, Egypt",
+        "id": 355005
+    },
+    {
+        "city": "Al Khankah, Egypt",
+        "id": 360928
+    },
+    {
+        "city": "Al Kharijah, Egypt",
+        "id": 360923
+    },
+    {
+        "city": "Al Mahallah al Kubra, Egypt",
+        "id": 360829
+    },
+    {
+        "city": "Al Manshah, Egypt",
+        "id": 360773
+    },
+    {
+        "city": "Al Mansurah, Egypt",
+        "id": 360761
+    },
+    {
+        "city": "Al Manzilah, Egypt",
+        "id": 360754
+    },
+    {
+        "city": "Al Manākh, Egypt",
+        "id": 410366
+    },
+    {
+        "city": "Al Matariyah, Egypt",
+        "id": 360716
+    },
+    {
+        "city": "Al Minya, Egypt",
+        "id": 360686
+    },
+    {
+        "city": "Al Qanatir al Khayriyah, Egypt",
+        "id": 360615
+    },
+    {
+        "city": "Al Qanayat, Egypt",
+        "id": 360612
+    },
+    {
+        "city": "Al Qurayn, Egypt",
+        "id": 360542
+    },
+    {
+        "city": "Al Qusayr, Egypt",
+        "id": 360531
+    },
+    {
+        "city": "Al Qusiyah, Egypt",
+        "id": 360526
+    },
+    {
+        "city": "Al Wasitah, Egypt",
+        "id": 360464
+    },
+    {
+        "city": "Al Wiḩdah, Egypt",
+        "id": 408911
+    },
+    {
+        "city": "Al Ḩubayl, Egypt",
+        "id": 361133
+    },
+    {
+        "city": "Al ‘Atabah, Egypt",
+        "id": 7922173
+    },
+    {
+        "city": "Alexandria, Egypt",
+        "id": 361058
+    },
+    {
+        "city": "As Saff, Egypt",
+        "id": 359900
+    },
+    {
+        "city": "Ash Shuhada, Egypt",
+        "id": 359953
+    },
+    {
+        "city": "Ash Shāţibī, Egypt",
+        "id": 360015
+    },
+    {
+        "city": "Ashmun, Egypt",
+        "id": 360048
+    },
+    {
+        "city": "Aswan, Egypt",
+        "id": 359792
+    },
+    {
+        "city": "Asyut, Egypt",
+        "id": 359783
+    },
+    {
+        "city": "At Tall al Kabir, Egypt",
+        "id": 359710
+    },
+    {
+        "city": "Awsim, Egypt",
+        "id": 359576
+    },
+    {
+        "city": "Az Zaqaziq, Egypt",
+        "id": 359493
+    },
+    {
+        "city": "Az Zarqa, Egypt",
+        "id": 419435
+    },
+    {
+        "city": "Aşlān, Egypt",
+        "id": 359927
+    },
+    {
+        "city": "Balṭîm, Egypt",
+        "id": 359304
+    },
+    {
+        "city": "Banha, Egypt",
+        "id": 359280
+    },
+    {
+        "city": "Bani Mazar, Egypt",
+        "id": 359212
+    },
+    {
+        "city": "Bani Suwayf, Egypt",
+        "id": 359173
+    },
+    {
+        "city": "Banī Ghālib, Egypt",
+        "id": 359256
+    },
+    {
+        "city": "Basyun, Egypt",
+        "id": 358970
+    },
+    {
+        "city": "Beheira, Egypt",
+        "id": 7910966
+    },
+    {
+        "city": "Bilbays, Egypt",
+        "id": 358840
+    },
+    {
+        "city": "Bilqas Qism Awwal, Egypt",
+        "id": 358821
+    },
+    {
+        "city": "Bur Safajah, Egypt",
+        "id": 358620
+    },
+    {
+        "city": "Bush, Egypt",
+        "id": 358600
+    },
+    {
+        "city": "Bāhā, Egypt",
+        "id": 359416
+    },
+    {
+        "city": "Cairo, Egypt",
+        "id": 360630
+    },
+    {
+        "city": "Damanhur, Egypt",
+        "id": 358448
+    },
+    {
+        "city": "Damietta, Egypt",
+        "id": 358048
+    },
+    {
+        "city": "Dawwār Abū al ‘Āşī, Egypt",
+        "id": 358333
+    },
+    {
+        "city": "Dayr Mawas, Egypt",
+        "id": 358274
+    },
+    {
+        "city": "Dayrut, Egypt",
+        "id": 358269
+    },
+    {
+        "city": "Dhahab, Egypt",
+        "id": 358245
+    },
+    {
+        "city": "Dikirnis, Egypt",
+        "id": 358172
+    },
+    {
+        "city": "Dishna, Egypt",
+        "id": 358115
+    },
+    {
+        "city": "Disuq, Egypt",
+        "id": 358108
+    },
+    {
+        "city": "Diyarb Najm, Egypt",
+        "id": 358095
+    },
+    {
+        "city": "El Gouna, Egypt",
+        "id": 6692512
+    },
+    {
+        "city": "El-Qushlâqât, Egypt",
+        "id": 357790
+    },
+    {
+        "city": "Faqus, Egypt",
+        "id": 356989
+    },
+    {
+        "city": "Faraskur, Egypt",
+        "id": 356945
+    },
+    {
+        "city": "Farshut, Egypt",
+        "id": 356933
+    },
+    {
+        "city": "Fuwah, Egypt",
+        "id": 356806
+    },
+    {
+        "city": "Halwan, Egypt",
+        "id": 355795
+    },
+    {
+        "city": "Hawsh Isa, Egypt",
+        "id": 356000
+    },
+    {
+        "city": "Hihya, Egypt",
+        "id": 355939
+    },
+    {
+        "city": "Ibshaway, Egypt",
+        "id": 355648
+    },
+    {
+        "city": "Idfu, Egypt",
+        "id": 411165
+    },
+    {
+        "city": "Idku, Egypt",
+        "id": 355628
+    },
+    {
+        "city": "Ismailia, Egypt",
+        "id": 361055
+    },
+    {
+        "city": "Isna, Egypt",
+        "id": 355449
+    },
+    {
+        "city": "Itsa, Egypt",
+        "id": 355420
+    },
+    {
+        "city": "Izbat al Burj, Egypt",
+        "id": 355392
+    },
+    {
+        "city": "Jirja, Egypt",
+        "id": 355026
+    },
+    {
+        "city": "Jizayy, Egypt",
+        "id": 355015
+    },
+    {
+        "city": "Juhaynah, Egypt",
+        "id": 354981
+    },
+    {
+        "city": "Kafr ad Dawwar, Egypt",
+        "id": 354775
+    },
+    {
+        "city": "Kafr ash Shaykh, Egypt",
+        "id": 354502
+    },
+    {
+        "city": "Kafr az Zayyat, Egypt",
+        "id": 354365
+    },
+    {
+        "city": "Kafr Saqr, Egypt",
+        "id": 354105
+    },
+    {
+        "city": "Kafr Shukr, Egypt",
+        "id": 354076
+    },
+    {
+        "city": "Kawm Hamadah, Egypt",
+        "id": 353828
+    },
+    
+    {
+        "city": "Kousa, Egypt",
+        "id": 350422
+    },
+    {
+        "city": "Luxor, Egypt",
+        "id": 360502
+    },
+    {
+        "city": "Madinat Sittah Uktubar, Egypt",
+        "id": 353219
+    },
+    {
+        "city": "Madīnat as Sādāt, Egypt",
+        "id": 353223
+    },
+    {
+        "city": "Makadi Bay, Egypt",
+        "id": 6692518
+    },
+    {
+        "city": "Mallawi, Egypt",
+        "id": 352951
+    },
+    {
+        "city": "Manfalut, Egypt",
+        "id": 352913
+    },
+    {
+        "city": "Marsa Alam, Egypt",
+        "id": 352736
+    },
+    {
+        "city": "Marsa Matruh, Egypt",
+        "id": 352733
+    },
+    {
+        "city": "Mashtul as Suq, Egypt",
+        "id": 352679
+    },
+    {
+        "city": "Masākin al Akhshāb wa ash Shāy, Egypt",
+        "id": 7916170
+    },
+    {
+        "city": "Matay, Egypt",
+        "id": 352628
+    },
+    {
+        "city": "Minuf, Egypt",
+        "id": 352354
+    },
+    {
+        "city": "Minyat an Nasr, Egypt",
+        "id": 352344
+    },
+    {
+        "city": "Muḩāfaz̧at ad Daqahlīyah, Egypt",
+        "id": 361849
+    },
+    {
+        "city": "Muḩāfaz̧at al Baḩr al Aḩmar, Egypt",
+        "id": 361468
+    },
+    {
+        "city": "Muḩāfaz̧at al Buḩayrah, Egypt",
+        "id": 361370
+    },
+    {
+        "city": "Muḩāfaz̧at al Fayyūm, Egypt",
+        "id": 361323
+    },
+    {
+        "city": "Muḩāfaz̧at al Gharbīyah, Egypt",
+        "id": 361294
+    },
+    {
+        "city": "Muḩāfaz̧at al Ismā‘īlīyah, Egypt",
+        "id": 361056
+    },
+    {
+        "city": "Muḩāfaz̧at al Jīzah, Egypt",
+        "id": 360997
+    },
+    {
+        "city": "Muḩāfaz̧at al Minyā, Egypt",
+        "id": 360688
+    },
+    {
+        "city": "Muḩāfaz̧at al Minūfīyah, Egypt",
+        "id": 360689
+    },
+    {
+        "city": "Muḩāfaz̧at al Qalyūbīyah, Egypt",
+        "id": 360621
+    },
+    {
+        "city": "Muḩāfaz̧at al Qāhirah, Egypt",
+        "id": 360631
+    },
+    {
+        "city": "Muḩāfaz̧at al Uqşur, Egypt",
+        "id": 7603259
+    },
+    {
+        "city": "Muḩāfaz̧at al Wādī al Jadīd, Egypt",
+        "id": 360483
+    },
+    {
+        "city": "Muḩāfaz̧at as Suways, Egypt",
+        "id": 359797
+    },
+    {
+        "city": "Muḩāfaz̧at ash Sharqīyah, Egypt",
+        "id": 360016
+    },
+    {
+        "city": "Muḩāfaz̧at Asyūţ, Egypt",
+        "id": 359781
+    },
+    {
+        "city": "Muḩāfaz̧at Banī Suwayf, Egypt",
+        "id": 359171
+    },
+    {
+        "city": "Muḩāfaz̧at Būr Sa‘īd, Egypt",
+        "id": 358617
+    },
+    {
+        "city": "Muḩāfaz̧at Dumyāţ, Egypt",
+        "id": 358044
+    },
+    {
+        "city": "Muḩāfaz̧at Janūb Sīnā’, Egypt",
+        "id": 355182
+    },
+    {
+        "city": "Muḩāfaz̧at Kafr ash Shaykh, Egypt",
+        "id": 354500
+    },
+    {
+        "city": "Muḩāfaz̧at Maţrūḩ, Egypt",
+        "id": 352603
+    },
+    {
+        "city": "Muḩāfaz̧at Qinā, Egypt",
+        "id": 350546
+    },
+    {
+        "city": "Muḩāfaz̧at Shamāl Sīnā’, Egypt",
+        "id": 349401
+    },
+    {
+        "city": "Muḩāfaz̧at Sūhāj, Egypt",
+        "id": 347794
+    },
+    {
+        "city": "Naama, Egypt",
+        "id": 7280514
+    },
+    {
+        "city": "Naj Hammadi, Egypt",
+        "id": 351434
+    },
+    {
+        "city": "Naj‘ al Khuţbah, Egypt",
+        "id": 351483
+    },
+    {
+        "city": "Naj‘ Tinjār, Egypt",
+        "id": 351388
+    },
+    {
+        "city": "Nişf Atrīb, Egypt",
+        "id": 351022
+    },
+    {
+        "city": "Nuwaybia, Egypt",
+        "id": 350893
+    },
+    {
+        "city": "Port el Ghalib, Egypt",
+        "id": 6692521
+    },
+    {
+        "city": "Port Said, Egypt",
+        "id": 358619
+    },
+    {
+        "city": "Qalyub, Egypt",
+        "id": 350789
+    },
+    {
+        "city": "Qasr al Farafirah, Egypt",
+        "id": 350661
+    },
+    {
+        "city": "Qina, Egypt",
+        "id": 350550
+    },
+    {
+        "city": "Qutur, Egypt",
+        "id": 350376
+    },
+    {
+        "city": "Quwaysina, Egypt",
+        "id": 350370
+    },
+    {
+        "city": "Rosetta, Egypt",
+        "id": 350203
+    },
+    {
+        "city": "Samalut, Egypt",
+        "id": 349717
+    },
+    {
+        "city": "Samannud, Egypt",
+        "id": 349715
+    },
+    {
+        "city": "Sarābiyūm, Egypt",
+        "id": 349598
+    },
+    {
+        "city": "Sharm ash Shaykh, Egypt",
+        "id": 349340
+    },
+    {
+        "city": "Shibin al Kawm, Egypt",
+        "id": 349158
+    },
+    {
+        "city": "Shibin al Qanatir, Egypt",
+        "id": 349156
+    },
+    {
+        "city": "Shirbin, Egypt",
+        "id": 349114
+    },
+    {
+        "city": "Sidi Salim, Egypt",
+        "id": 348112
+    },
+    {
+        "city": "Siwah, Egypt",
+        "id": 347863
+    },
+    {
+        "city": "Suez, Egypt",
+        "id": 359796
+    },
+    {
+        "city": "Suhaj, Egypt",
+        "id": 347796
+    },
+    {
+        "city": "Sumusta as Sultani, Egypt",
+        "id": 347749
+    },
+    {
+        "city": "Syria, Egypt",
+        "id": 412814
+    },
+    {
+        "city": "Sāḩil Ţahţā, Egypt",
+        "id": 349852
+    },
+    {
+        "city": "Tahta, Egypt",
+        "id": 347634
+    },
+    {
+        "city": "Tala, Egypt",
+        "id": 347612
+    },
+    {
+        "city": "Talkha, Egypt",
+        "id": 347591
+    },
+    {
+        "city": "Tamiyah, Egypt",
+        "id": 347542
+    },
+    {
+        "city": "Tanda, Egypt",
+        "id": 347497
+    },
+    {
+        "city": "testing, Egypt",
+        "id": 7522531
+    },
+    {
+        "city": "Tor, Egypt",
+        "id": 359678
+    },
+    {
+        "city": "Toukh, Egypt",
+        "id": 347236
+    },
+    {
+        "city": "Wāsiţ, Egypt",
+        "id": 346315
+    },
+    {
+        "city": "Zifta, Egypt",
+        "id": 346030
+    },
+    {
+        "city": "‘Ezbet el-Auqât, Egypt",
+        "id": 357542
+    },
+    {
+        "city": "‘Izbat Abū ‘Aţwah, Egypt",
+        "id": 357678
+    },
+    {
+        "city": "‘Izbat Nādī aş Şayd, Egypt",
+        "id": 415505
+    },
+    {
+        "city": "‘Uqrat Şafḩah, Egypt",
+        "id": 414338
+    }
+]

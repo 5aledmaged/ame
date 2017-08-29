@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24">
+	<defs>
+		<filter id="a" color-interpolation-filters="sRGB">
+			<feFlood result="flood" flood-color="#000" flood-opacity=".2"/>
+			<feComposite result="composite1" operator="in" in2="SourceGraphic" in="flood"/>
+			<feGaussianBlur result="blur" stdDeviation=".2" in="composite1"/>
+			<feOffset result="offset" dy=".3"/>
+			<feComposite result="composite2" in2="offset" in="SourceGraphic"/>
+		</filter>
+	</defs>
+	<path d="M10.629.505l-.355 2.464A9.306 9.306 0 0 0 7.26 4.137L5.175 2.574 2.898 4.84l1.504 2.01a9.067 9.067 0 0 0-1.325 2.942L.5 10.16v3.218l2.448.355a9.281 9.281 0 0 0 1.164 3.011l-1.564 2.083 2.296 2.276 2.007-1.499a8.91 8.91 0 0 0 2.945 1.32l.368 2.575h3.221l.336-2.446a9.637 9.637 0 0 0 3.028-1.177l2.09 1.563 2.282-2.267-1.519-2.014a9.155 9.155 0 0 0 1.321-2.943l2.577-.368V10.63l-2.471-.354a8.896 8.896 0 0 0-1.15-3.012l1.564-2.083-2.264-2.285-2.016 1.499a9.17 9.17 0 0 0-2.945-1.32L13.85.5h-3.221zm1.38 6.897A4.567 4.567 0 0 1 16.611 12a4.567 4.567 0 0 1-4.602 4.598A4.567 4.567 0 0 1 7.407 12a4.567 4.567 0 0 1 4.602-4.598z" fill="#2196f3" filter="url(#a)"/>
+</svg>

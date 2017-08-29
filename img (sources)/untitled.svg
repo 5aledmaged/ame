@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="svg6" viewBox="0 0 5.1471597 12.2" height="12.2" width="5.2">
+  <style id="style2">
+<![CDATA[
+      .droppy {
+        stroke-width: 0;
+        fill: white;
+        fill-opacity: 1;
+      }
+    ]]>
+  </style>
+  <path class="droppy" d="M0 9.6L2.6 0l2.6 9.6a2.6 2.6 0 1 1-5.2 0"/>
+</svg>

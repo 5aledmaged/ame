@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ame &middot; Local Weather App</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#2196f3">
+	<meta name="description" content="Super Awesome 3D Navigation Menus">
+	<meta name="author" content="Khaled Maged">
+
+	<!-- <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="../favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="../favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="../manifest.json">
+	<link rel="mask-icon" href="../safari-pinned-tab.svg" color="#2c3e50">
+	<meta name="apple-mobile-web-app-title" content="Ame">
+	<meta name="application-name" content="Ame"> -->
+
+	<link href="https://fonts.googleapis.com/css?family=Quicksand:400" rel="stylesheet">
+	<link rel="stylesheet/less" type="text/css" href="css/stylesheet.less">
+
+	<script src="js/less.js"></script>
+	<script src="js/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+	<div class="ame-selector">
+		<div class="ame-locator-logo">
+			<div class="logo-wrapper">
+				<object type="image/svg+xml" data="img/logo2.svg">
+					<img src="img/logo.png" width="100%">
+				</object>
+			</div>
+			<p>Weather App</p>
+		</div>
+		<a class="ame-auto-loc" href="#location">
+			<p>Detect my location</p>
+		</a>
+		<span class="ame-loc-or">or</span>
+		<form>
+			<label for="location">Enter a location:</label>
+			<input type="text" placeholder="city, country" name="location">
+			<ul class="ame-loc-match">
+			</ul>
+			<input type="submit">
+		</form>
+		<p id="loc-err" class="hidden">?????????????</p>
+	</div>
+
+	<div class="ame-main hidden">
+
+		<aside class="ame-preferences">
+			<div class="ame-top-bar">
+				<div class="ame-logo">
+					<object type="image/svg+xml" data="img/logo2.svg">
+						<img src="img/logo2.svg" width="100%">
+					</object>
+				</div>
+				<h3>Preferences</h3>
+			</div>
+			<div class="ame-pref-wrap">
+				<ul class="preferences">
+					<li class="unit option">????????</li>
+					<li class="location option">?????????</li>
+				</ul>
+			</div>
+			<div class="ame-note">
+				<p class="ame-note-txt">
+					<strong>
+						?????????????????
+					</strong>
+					<br>
+					?????
+				</p>
+			</div>
+		</aside>
+
+		<main class="ame-forecast">
+
+			<section class="forecast-panel main-panel">
+				<div class="data-wrapper">
+					<div class="main-forecast">
+						<p class="ame-main-temp option">???</p>
+						<p class="ame-main-info">unknown</p>
+						<p class="update hidden">unknown</p>
+					</div>
+					<img class="main-icon" src="img/icons/50d.svg">
+				</div>
+			</section>
+
+			<h2>Hourly Forecast</h2>
+			<section class="forecast-panel hour-panel">
+				<div class="data-wrapper">
+					<div class="data-column">
+						<p class="time">??:??</p>
+						<p class="temprature">??&deg;?</p>
+						<img src="img/icons/50n.svg">
+					</div>
+					<div class="data-column">
+						<p class="time">??:??</p>
+						<p class="temprature">??&deg;?</p>
+						<img src="img/icons/50n.svg">
+					</div>
+					<div class="data-column">
+						<p class="time">??:??</p>
+						<p class="temprature">??&deg;?</p>
+						<img src="img/icons/50n.svg">
+					</div>
+					<div class="data-column">
+						<p class="time">??:??</p>
+						<p class="temprature">??&deg;?</p>
+						<img src="img/icons/50n.svg">
+					</div>
+				</div>
+			</section>
+
+			<h2>Daily Forecast</h2>
+			<section class="forecast-panel day-panel">
+				<div class="data-wrapper">
+					<div class="data-column">
+						<p class="time">??/??</p>
+						<p class="max-temp">??&deg;?</p>
+						<p class="min-temp">??&deg;?</p>
+						<img src="img/icons/50d.svg">
+					</div>
+					<div class="data-column">
+						<p class="time">??/??</p>
+						<p class="max-temp">??&deg;?</p>
+						<p class="min-temp">??&deg;?</p>
+						<img src="img/icons/50d.svg">
+					</div>
+					<div class="data-column">
+						<p class="time">??/??</p>
+						<p class="max-temp">??&deg;?</p>
+						<p class="min-temp">??&deg;?</p>
+						<img src="img/icons/50d.svg">
+					</div>
+					<div class="data-column">
+						<p class="time">??/??</p>
+						<p class="max-temp">??&deg;?</p>
+						<p class="min-temp">??&deg;?</p>
+						<img src="img/icons/50d.svg">
+					</div>
+				</div>
+			</section>
+
+		</main>
+
+	</div>
+	
+	<script src="js/script.js"></script>
+</body>
+</html>
