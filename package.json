@@ -1,0 +1,26 @@
+{
+  "name": "ame",
+  "version": "1.0.0",
+  "description": "ame app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5aledmaged/ame.git"
+  },
+  "author": "Khaled Maged",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/5aledmaged/ame/issues"
+  },
+  "homepage": "https://github.com/5aledmaged/ame#readme",
+  "dependencies": {
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "express": "^4.15.4"
+  }
+}
