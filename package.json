@@ -21,6 +21,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "nsp": "^2.7.0",
+    "open": "0.0.5"
   }
 }
