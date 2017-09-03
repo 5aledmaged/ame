@@ -1,8 +1,8 @@
+'use strict';
 import '../css/styles.less';
 import $ from 'jquery';
 
 (function(){
-'use strict';
 // global variables
 const $locPan = $('.ame-selector');
 const $mainPan = $('.ame-main');
