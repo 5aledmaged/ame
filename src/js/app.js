@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 (function(){
 'use strict';
-// global letiables
+// global variables
 const $locPan = $('.ame-selector');
 const $mainPan = $('.ame-main');
 
