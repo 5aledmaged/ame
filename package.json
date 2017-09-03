@@ -2,7 +2,7 @@
   "name": "ame",
   "version": "1.0.0",
   "description": "ame app",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
     "prestart": "nsp check",
     "start": "babel-node buildScripts/srcServer.js",
