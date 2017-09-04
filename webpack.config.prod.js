@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
 	devtool: 'source-map',
@@ -7,7 +8,7 @@ export default {
 	target: 'web',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		publicPath: '/js/',
+		publicPath: '/',
 		filename: 'bundle.js'
 	},
 	plugins: [
