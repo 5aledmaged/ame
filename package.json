@@ -8,7 +8,11 @@
     "start": "babel-node buildScripts/srcServer.js",
     "share": "lt --port 3000",
     "lint": "eslint .",
-    "test": "mocha --reporter progress buildScripts/testSetup.js \"src/**/*.test.js\""
+    "test": "mocha --reporter progress buildScripts/testSetup.js \"src/**/*.test.js\"",
+    "clean-dist": "rimraf ./dist && mkdir dist",
+    "prebuild": "npm run clean-dist && npm run lint",
+    "build": "babel-node buildScripts/build.js",
+    "postbuild": "babel-node buildScripts/distServer.js"
   },
   "repository": {
     "type": "git",
