@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
 	devtool: 'source-map',
@@ -16,9 +17,16 @@ export default {
 		filename: '[name].[chunkhash].js'
 	},
 	plugins: [
+		new webpack.LoaderOptionsPlugin({
+			minimize: true,
+			debug: false,
+			noInfo: true // set to false to see a list of every file being bundled.
+		}),
 		new webpack.ProvidePlugin({
             '$': 'jquery'
 		}),
+		// Generate an external css file with a hash in the filename
+		new ExtractTextPlugin('[name].[contenthash].css'),
 		// Hash the files using MD5 so that their names change when the content changes.
 		new WebpackMd5Hash(),
 		// Use CommonsChunkPlugin to create a sepreate bundle of vendor libraries
@@ -54,14 +62,16 @@ export default {
 			},
 			{
 				test: /\.less$/,
-				use: [
-					{ loader: 'style-loader' },
-					{
-						loader: "css-loader",
-						options: { url: false }
-					},
-					{ loader: 'less-loader' }
-				]
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						{
+							loader: "css-loader",
+							options: { url: false }
+						},
+						{ loader: 'less-loader' }
+					]
+				})
 			}
 		]
 	}
