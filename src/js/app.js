@@ -1,6 +1,6 @@
+/* global $ */
 'use strict';
 import '../css/styles.less';
-import $ from 'jquery';
 
 (function(){
 // global variables
