@@ -26,11 +26,14 @@ export default {
 			},
 			{
 				test: /\.less$/,
-				use: [ 'style-loader', 'css-loader', 'less-loader' ]
-			},
-			{
-				test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-				loader: 'file-loader'
+				use: [
+					{ loader: 'style-loader' },
+					{
+						loader: "css-loader",
+						options: { url: false }
+					},
+					{ loader: 'less-loader' }
+				]
 			}
 		]
 	}
