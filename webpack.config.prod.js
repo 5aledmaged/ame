@@ -4,17 +4,39 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
 	devtool: 'source-map',
-	entry: path.resolve(__dirname, 'src', 'js', 'app.js'),
+	entry: {
+		vendor: path.resolve(__dirname, 'src', 'js', 'vendor.js'),
+		app: path.resolve(__dirname, 'src', 'js', 'app.js')
+	},
 	target: 'web',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
-		filename: 'bundle.js'
+		filename: '[name].js'
 	},
 	plugins: [
+		new webpack.ProvidePlugin({
+            '$': 'jquery'
+        }),
+		// Use CommonsChunkPlugin to create a sepreate bundle of vendor libraries
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor'
+		}),
 		// Create HTML file that includes reference to bundled JS.
 		new HtmlWebpackPlugin({
 			template: 'src/index.html',
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				removeRedundantAttributes: true,
+				useShortDoctype: true,
+				removeEmptyAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				keepClosingSlash: true,
+				minifyJS: true,
+				minifyCSS: true,
+				minifyURLs: true
+			},
 			inject: true
 		}),
 		// Minify JS
