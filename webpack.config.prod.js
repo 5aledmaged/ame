@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import WebpackMd5Hash from 'webpack-md5-hash';
+import WebpackSHAHash from 'webpack-sha-hash';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
@@ -18,17 +18,18 @@ export default {
 	},
 	plugins: [
 		new webpack.LoaderOptionsPlugin({
+			context: '/',
 			minimize: true,
 			debug: false,
 			noInfo: true // set to false to see a list of every file being bundled.
 		}),
 		new webpack.ProvidePlugin({
-            '$': 'jquery'
+			'$': 'jquery'
 		}),
 		// Generate an external css file with a hash in the filename
 		new ExtractTextPlugin('[name].[contenthash].css'),
-		// Hash the files using MD5 so that their names change when the content changes.
-		new WebpackMd5Hash(),
+		// Hash the files using SHA-256 so that their names change when the content changes.
+		new WebpackSHAHash(),
 		// Use CommonsChunkPlugin to create a sepreate bundle of vendor libraries
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor'
@@ -66,7 +67,7 @@ export default {
 					fallback: 'style-loader',
 					use: [
 						{
-							loader: "css-loader",
+							loader: 'css-loader?sourceMap',
 							options: { url: false }
 						},
 						{ loader: 'less-loader' }
