@@ -95,7 +95,7 @@ html {
 }
 
 body {
-	font: normal 1em/1.5 'Quicksand', sans-serif;
+	font: normal 1rem/1.5 'Quicksand', sans-serif;
 	color: @t;
 	background: @s;
 	height: 100%;
@@ -242,25 +242,23 @@ h3 {
 
 	.ame-loc-match {
 		position: absolute;
-		top: 110%;
-		left: 0;
-		right: 0;
+		top: 100%;
+		//right: 0;
 		height: 15em;
 		overflow-y: auto;
 		transform: skew(-2deg);
 		background: @s;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
-		li, a {
+		li {
 			width: 100%;
 		}
 
-		li {
-			margin-bottom: .25em;
-		}
-
 		a {
-			display: inline-block;
+			display: block;
 			cursor: pointer;
+			line-height: 1.5;
+			padding: 0 0.75rem;
 
 			&:hover {
 				background: @l;
@@ -271,7 +269,6 @@ h3 {
 		.hl {
 			background: @h;
 			color: black;
-			font-style: italic;
 		}
 
 	.ame-locator-logo {
@@ -304,6 +301,10 @@ h3 {
 		color: red;
 		padding: 1em;
 	}
+
+.ame-manual-loader {
+	text-align: center;
+}
 
 /* ==============================================================================
 	=forecast area
@@ -468,9 +469,9 @@ h3 {
 	=responsive
 ===============================================================================*/
 @media screen and (max-width: 768px) {
-	.portrait {
+/* 	.portrait {
 		font-size: calc(100vw / 30);
-	}
+	} */
 
 	.ame-main {
 		width: 95%;
@@ -519,4 +520,43 @@ h3 {
 			padding-top: 18.75%;
 		}
 	}
+}
+
+#circleG{
+	width:146px;
+	margin:auto;
+}
+
+.circleG{
+	background: #fff;
+	float: left;
+	height: 31px;
+	margin-left: 17px;
+	width: 31px;
+	animation: loading 2.24s infinite;
+	border-radius: 20px;
+}
+
+#circleG_1{
+	animation-delay:0.45s;
+}
+
+#circleG_2{
+	animation-delay:1.05s;
+}
+
+#circleG_3{
+	animation-delay:1.35s;
+}
+
+
+
+@keyframes loading {
+	0% {}
+
+	50% {
+		background-color:rgb(0,0,0);
+	}
+
+	100% {}
 }
