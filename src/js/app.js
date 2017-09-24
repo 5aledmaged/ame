@@ -3,16 +3,13 @@
 import '../css/styles.less';
 
 (function(){
-// global variables
-const $locPan = $('.ame-selector');
-const $mainPan = $('.ame-main');
-
+/* main object containing app state */
 let _ame = {
-	'options': {
+	options: {
 		'unit': 'C',
 		'loc': undefined
 	},
-	'data': {
+	data: {
 		'main': {
 			'temp': 0,
 			'icon': '01d',
@@ -77,7 +74,7 @@ let _ame = {
 			}
 		]
 	},
-	'el': {
+	el: {
 		'main': {
 			'temp': $('.ame-main-temp'),
 			'icon': $('.main-icon'),
@@ -92,10 +89,10 @@ let _ame = {
 				this.icon.attr('src', 'img/icons/'+ data.icon + '.svg');
 				this.location.text('Location: ' + data.location);
 				this.info.text(data.info);
-				let mainTime = typeof data.time === 'object' ? data.time : new Date(data.time); // Date object if not local
+				/*let mainTime = typeof data.time === 'object' ? data.time : new Date(data.time); // Date object if not local
 				this.time.text('updated ' + _ame.day[mainTime.getDay()] + ', '+ mainTime.getDate() + ' '
 										+ _ame.month[mainTime.getMonth()] + ' ' + ('0' + mainTime.getHours()).slice(-2)
-										+ ':' + ('0' + mainTime.getMinutes()).slice(-2));
+										+ ':' + ('0' + mainTime.getMinutes()).slice(-2));*/
 			}
 		},
 		'hour': {
@@ -153,12 +150,12 @@ let _ame = {
 			location: $('.option.location')
 		}
 	},
-	'day': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-	'month': ['January','February','March','April','May','June','July','August','September','October','November','December'],
-	'formatTemp': function(t) {
+	// day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+	// month: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+	formatTemp: function(t) {
 		return t + '\u00b0' + this.options.unit;
 	},
-	'updateTemp': function() {
+	updateTemp: function() {
 		this.el.main.temp.text(this.formatTemp(this.data.main.temp));
 		_ame.updateOptions(); /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< here */
 		this.el.hour.temp.each(function(i, el) {
@@ -182,7 +179,7 @@ let _ame = {
 	toFahrenheit: function _ameToFahrenheit(c) {
 		return Math.round((9/5) * c + 32);
 	},
-	'toggleTemp': function _ameToggleTemp() {
+	toggleTemp: function _ameToggleTemp() {
 		console.info('toggleTemp called');
 		let u = 'fahrenheit';
 
@@ -216,14 +213,14 @@ let _ame = {
 		}
 		this.updateTemp();
 		this.el.options.updateUnit();
-		_ame.store.options();
+		_ame.storage.options();
 		localStorage.setItem('data', JSON.stringify(_ame.data));
 		this.notify('<strong>changed default unit to ' + u + '</strong><br>preferences saved!');
 	},
 	switchUnits: function() {
 		_ame.toggleTemp();
 	},
-	'notify': function _ameNotify(msg) {
+	notify: function _ameNotify(msg) {
 		const note = _ame.el.note;
 		clearTimeout(note.timeoutId);
 		note.main.hide();
@@ -234,53 +231,50 @@ let _ame = {
 			}, 1500);
 		});
 	},
-	error: {
-		loc: $('#loc-err'),
-		show: function _ameShowError(e) {
-			_ame.error.loc.text(e).removeClass('hidden');
-		},
-		log: function _ameLogError(e) {
-			console.error(e);
-		},
+	error: function _ameError(err, show) {
+		const el = $('.ame-location-error');
+		console.error(err);
+		if (show) el.text(err).removeClass('hidden');
 	},
 	locationError: function _ameLocationError(e) {
-		let m = 'lovation error';
+		let m = 'location error';
 		switch (e.code) {
 			case 1:
 				m = 'user denied permision, please allow app to access your location or enter your location manually.';
 				break;
 			case 2:
-				console.log('POSITION_UNAVAILABLE');
 				m = 'location is unavailable, make sure you\'re connected to the internet. if the problem presists, enter your location manually or try again later.';
 				break;
 			case 3:
 				m = 'browser is taking too long to respond, please enter your location manually or try again later.';
 				break;
 		}
-		_ame.error.loc.text('error: ' + m).removeClass('hidden');
-		console.error(e);
+		_ame.error('error: ' + m, true);
 	},
 	updateOptions: function ameUpdateOptions() {
 
 	},
-	ui: {
+	interface: {
+		main: $('.ame-main'),
+		location: $('.ame-locator'),
+		locationButton: $('.ame-auto-loc'),
 		state: 'location',
-		switch: function _ameUISwitch() {
-			if (_ame.ui.state === 'location') {
-				$mainPan.removeClass('hidden');
-				$locPan.addClass('hidden');
-				_ame.ui.state = 'forecast';
+		switch: function _ameInterfaceSwitch() {
+			if (_ame.interface.state === 'location') {
+				_ame.interface.main.removeClass('hidden');
+				_ame.interface.location.addClass('hidden');
+				_ame.interface.state = 'main';
 			}
 			else {
-				$locPan.removeClass('hidden');
-				$mainPan.addClass('hidden');
-				_ame.ui.state = 'location';
+				_ame.interface.location.removeClass('hidden');
+				_ame.interface.main.addClass('hidden');
+				_ame.interface.state = 'location';
 				_ame.options.loc = undefined;
-				_ame.store.options();
+				_ame.storage.options();
 			}
-			console.log('switched to ' + _ame.ui.state + ' ui.');
+			console.log('switched to ' + _ame.interface.state + ' ui.');
 		},
-		orient: function _ameUIOrient() {
+		orient: function _ameInterfaceOrient() {
 			const bod = $('html');
 			const h = $(window).height();
 			const w = $('body').prop('clientWidth');
@@ -295,169 +289,169 @@ let _ame = {
 				if (p) bod.removeClass('portrait');
 			}
 		},
-		pref: function _ameUIPref() {
+		togglePreferences: function _ameInterfaceTogglePreferences() {
 			$('.ame-pref-wrap').slideToggle(200);
 		}
 	},
-	input: {
-		el: $('input[type=text]'),
-		match: $('.ame-loc-match'),
-		alignMatch: function _ameAlignMatch() {
+	manual: {
+		form: $('.ame-manual'),
+		label: $('.ame-manual label'),
+		input: $('input[name=location]'),
+		list: $('.ame-loc-match'),
+		loader: $('.ame-manual-loader'),
+		country: [],
+		selectedCountry: 'none',
+		city: [],
+		initialSetup: function _ameManualInitialSetup() {
+			_ame.manual.list.on('mouseenter', function () {
+				console.log('hovering over this thing');
+				_ame.manual.input.blur();
+			})
+			.on('mouseleave', function () {
+				console.log('getting out of this thing');
+				_ame.manual.input.focus();
+			});
+		},
+		setup: function _ameManualSetup() {
+			// set loader width to equal label + input
+			console.log(_ame.manual.form.outerWidth());
+			_ame.manual.loader.width(_ame.manual.form.outerWidth());
+			_ame.manual.hide(); // hidden by default
+			_ame.manual.list.hide(); // hide the list initially
+		},
+		listSetup: function _ameManualListSetup() {
 			const w = $('body').width();
+			const el = _ame.manual.list;
 			if (w > 768) {
-				const el = _ame.input.match;
-				const labelWidth = $('.ame-selector label').outerWidth();
-				const elHeight = Math.floor($('html').outerHeight() - el.offset().top - 10);
+				const elWidth = Math.floor(_ame.manual.input.outerWidth());
+				const elHeight = Math.floor($('html').outerHeight() - _ame.manual.input.offset().top - _ame.manual.input.outerHeight());
+				const elLeft = Math.floor(_ame.manual.input.offset().left - _ame.manual.form.offset().left);
 				console.log(elHeight);
 				el.css({
-					left: labelWidth,
-					height: elHeight
+					width: elWidth,
+					height: elHeight,
+					left: elLeft
 				});
 			}
-			_ame.input.match.hide();
+			el.html('');
 		},
-		cities: [],
-		matched: [],
-		load: function _ameInputLoad() {
-			$.ajax({
-				url: 'js/sorted.json',
-				dataType: 'json',
-				success: _ame.input.save,
-				error: _ame.input.error
+		show: function _ameManualShow() {
+			_ame.manual.form.show();
+			_ame.manual.loader.hide();
+		},
+		hide: function _ameManualHide() {
+			_ame.manual.form.hide();
+			_ame.manual.loader.show();
+		},
+		loadCountry: function _ameManualLoadCountry() {
+			$.getJSON('http://ame-api.herokuapp.com/country.json', function (data) {
+				_ame.manual.country = data;
+				console.log('load country success', _ame.manual.country);
+				_ame.manual.input.on('keyup change', _ame.manual.country, _ame.manual.populate);
+				_ame.manual.show();
+				_ame.manual.listSetup();
+			})
+			.fail(function (err) {
+				_ame.error(err);
 			});
 		},
-		save: function(d) {
-			_ame.input.cities = d;
-		},
-		error: function(e) {
-			console.log(e);
-		},
-		filter: function _ameInputFilter(exp, list) {
-			return list.filter(function(place) {
-				const regex = new RegExp('^' + exp, 'i');
-				return place.city.match(regex);
+		loadCity: function _ameManualLoadCity() {
+			console.log('event fireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed!');
+			_ame.manual.hide();
+			const el = $(this);
+			const id = el.attr('data-id');
+			_ame.manual.selectedCountry = el.text();
+			console.log('selected country: ' + _ame.manual.selectedCountry);
+			$.ajax('http://ame-api.herokuapp.com/endpoint', {
+				type: 'POST',
+				data: 'id=' + id,
+				crossDomain: true,
+				success: function _ameManualLoadCitySuccess(data) {
+					_ame.manual.city = data;
+					console.log('success for post request');
+					console.log(_ame.manual.city);
+					_ame.manual.input.val('').attr('placeholder', 'enter city, state or region');
+					_ame.manual.label.text(_ame.manual.selectedCountry + ':');
+					_ame.manual.setup();
+					_ame.manual.list.off('click', 'a', _ame.manual.loadCity)
+									.on('click', 'a', fromInput);
+					_ame.manual.input	.off('keyup change')
+										.on('keyup change', _ame.manual.city, _ame.manual.populate);
+					_ame.manual.show();
+					_ame.manual.listSetup();
+					_ame.manual.input.focus();
+				},
+				error  : function _ameManualLoadCityError(jqXHR, status, error) {
+					_ame.error('load city error\njqXHR: '+ jqXHR +'\nstatus: '+ status +'\nerror: '+ error);
+				}
 			});
 		},
-		populate: function _ameInputPopulate() {
+		filter: function _ameManualFilter(key, data) {
+			return data.filter(function(place) {
+				const regex = new RegExp(key, 'gi');
+				return place[0].match(regex);
+			});
+		},
+		populate: function _ameManualPopulate(ev) {
+			const data = ev.data;
 			const key = $(this).val();
-			/*let t0 = performance.now();
-			let linear = _ame.input.filter(key, _ame.input.cities);
-			console.log(linear);
-			let t1 = performance.now();
-			console.log('linear runtime: ' + (t1 - t0) + 'ms');
-			let t2 = performance.now();
-			let binary = _ame.input.binaryFilter(key);
-			console.log(binary);
-			let t3 = performance.now();
-			console.log('binary runtime: ' + (t3 - t2) + 'ms');*/
 			if (key) {
-				let t1 = performance.now();
-				let match = _ame.input.binaryFilter(key);
-				let t2 = performance.now();
-				console.log('binary runtime: ' + (t2 - t1) + 'ms');
+				let match = _ame.manual.filter(key, data);
 				let matchHtml = $.map(match, place => {
-					const re = new RegExp(key, 'gi');
-					const city = place.city.replace(re, `<span class="hl">${key}</span>`);
-					return `<li><a data-city-id="${place.id}">${city}</a>`;
-				}).slice(0, 50);
+					// const re = new RegExp(key, 'gi');
+					// const hl = place[0].replace(re, `<span class="hl">${key}</span>`);
+					return `<li><a data-id="${place[1]}">${place[0]}</a>`;
+				})/*.slice(0, 50)*/;
 				if (matchHtml.length === 0) {
 					const noMatch = `<li>no match found!</li>`;
-					_ame.input.match.html(noMatch);
+					_ame.manual.list.html(noMatch);
 				}
 				else {
-					_ame.input.match.html(matchHtml);
+					_ame.manual.list.html(matchHtml);
 				}
-				_ame.input.match.show();
+				_ame.manual.list.show();
 			}
 			else {
-				_ame.input.match.hide();
+				_ame.manual.list.hide();
 			}
-		},
-		binaryFilter: function _ameInputBinaryFilter(key) {
-			let db = _ame.input.cities;
-			let lowerBound = function _ameLowerBound(key) {
-				let low = 0,
-					high = db.length - 1;
-				let mid, midCity;
-				let re = new RegExp('^' + key, 'i');
-				while (low <= high) {
-					mid = Math.floor(low + (high - low) / 2);
-					midCity = db[mid].city.toUpperCase();
-					if (re.test(midCity) || midCity > key) {
-						high = mid - 1;
-					}
-					else {
-						low = mid + 1;
-					}
-				}
-				return low;
-			};
-
-			let upperBound = function _ameUpperBound(key) {
-				let low = 0,
-					high = db.length - 1;
-				let mid, midCity;
-				let re = new RegExp('^' + key, 'i');
-				while (low <= high) {
-					mid = Math.floor(low + (high - low) / 2);
-					midCity = db[mid].city.toUpperCase();
-					if (re.test(midCity) || midCity < key) {
-						low = mid + 1;
-					}
-					else {
-						high = mid - 1;
-					}
-				}
-				return low;
-			};
-
-			key = key.toUpperCase();
-			let lBound = lowerBound(key);
-			let uBound = upperBound(key);
-
-			console.log('lBound: ' + lBound + ', uBound: ' + uBound + '.');
-
-			return db.slice(lBound, uBound);
 		}
 	},
-	store: {
-		save: function _ameStorageSave(data, key) {
+	storage: {
+		save: function _ameStorageSave(key, data) {
 			if (window.localStorage) {
-				data = JSON.stringify(data);
 				try {
 					localStorage.setItem(key, data);
 				}
-				catch (e) {
-					_ame.error.log(e);
+				catch (err) {
+					_ame.error(err);
 					return false;
 				}
 				return true;
 			}
 			else {
-				_ame.error.log('localStorage not supported');
+				_ame.error('localStorage not supported');
 				return false;
 			}
 		},
-		/* load:  function _ameStorageLoad(key) {
+		load: function _ameStorageLoad(key) {
 			if (window.localStorage) {
-				data = JSON.stringify(data);
 				try {
-					localStorage.setItem(key, data);
+					const data = localStorage.loadItem(key);
+					return data;
 				}
 				catch (e) {
-					_ame.error.log(e);
+					_ame.error(e);
 					return false;
 				}
-				return true;
 			}
 			else {
-				_ame.error.log('localStorage not supported');
+				_ame.error('localStorage not supported');
 				return false;
 			}
-		}, */
-		options: function _ameOptionsStore() {
+		},
+		options: function _ameStorageOptions() {
 			const o = JSON.stringify(_ame.options);
-			localStorage.setItem('options', o);
+			_ame.storage.save('options', o);
 		}
 	}
 };
@@ -476,7 +470,7 @@ const getLocation = function(e) {
 		navigator.geolocation.getCurrentPosition(getWeather, _ame.locationError, locationOptions);
 	}
 	else {
-		_ame.error.log('getLocation not supported');
+		_ame.error('getLocation not supported');
 	}
 };
 
@@ -496,11 +490,11 @@ const checkDifference = function() {
 const fromInput = function(e) {
 	e.preventDefault();
 	console.log('hi ihi ihihihihi ');
-	const loc = '&id=' + $(this).attr('data-city-id');
+	const loc = '&id=' + $(this).attr('data-id');
 	console.log('location: ' + loc);
 	getWeather(loc, true);
-	_ame.input.el.val('');
-	_ame.input.match.hide();
+	_ame.manual.input.val('');
+	_ame.manual.list.hide();
 };
 
 const getWeather = function(loc, noGeo) {
@@ -524,12 +518,12 @@ const getWeather = function(loc, noGeo) {
 	)
 	.done(function() {
 		_ame.updateOptions();
-		_ame.ui.switch();
+		_ame.interface.switch();
 		localStorage.setItem('data', JSON.stringify(_ame.data));
 		localStorage.setItem('lastCall', Date.now());
 	})
 	.fail(function(result) {
-		_ame.error.show('promises error: ' + result.statusText);
+		_ame.error('promises error: ' + result.statusText, true);
 	});
 };
 
@@ -541,15 +535,15 @@ const setWeather = function(response) {
 			return true;
 		}
 		catch(e) {
-			_ame.error.log(e);
+			_ame.error(e);
 			return false;
 		}
 	}
 
 	if (assignLoc()) {
-		_ame.store.options();
+		_ame.storage.options();
 	}
-
+	$('h3').on('click', _ame.interface.togglePreferences);
 
 	_ame.data.main = {
 		temp: _ame.setTemp(response.main.temp),
@@ -602,9 +596,10 @@ const setDailyForecast = function(response) {
 
 
 $(function() {
-	_ame.ui.orient();
-	$(window).on('resize', _ame.ui.orient);
-	_ame.input.load();
+	_ame.interface.orient();
+	_ame.manual.initialSetup();
+	_ame.manual.setup();
+	_ame.manual.loadCountry();
 	if (localStorage.options) {
 		console.info('localStorage.options found!');
 		_ame.options = JSON.parse(localStorage.options);
@@ -619,9 +614,10 @@ $(function() {
 				_ame.data = JSON.parse(localStorage.data);
 				_ame.el.main.update();
 				_ame.el.hour.update();
+				// let $locInput = $('.ame-locator form');e();
 				_ame.el.day.update();
 				_ame.updateOptions();
-				_ame.ui.switch();
+				_ame.interface.switch();
 			}
 		}
 		else {
@@ -632,19 +628,28 @@ $(function() {
 		console.warn('localStorage.options is not found! waiting for user input.');
 	}
 
-	let $locDetect = $('.ame-auto-loc');
-	// let $locInput = $('.ame-selector form');
-	$locDetect.on('click', getLocation);
-	_ame.input.el.on('keyup change', _ame.input.populate);
-	_ame.input.el.on('keypress', function(e) {
-		if (e.keyCode === 13) e.preventDefault();
-	});
-	_ame.input.match.on('click', 'a', fromInput);
-	_ame.el.main.temp.on('click', _ame.switchUnits);
-	_ame.el.options.unit.on('click', _ame.switchUnits);
-	_ame.el.options.location.on('click', _ame.ui.switch);
-	_ame.input.alignMatch();
-	$('h3').on('click', _ame.ui.pref);
+	/* Event Listeners
+	========================================= */
+	/* core functionality */
+		_ame.interface.locationButton.on('click', getLocation);
+
+	/* manual location input start */
+		_ame.manual.input.on('keypress', function(e) {
+			if (e.keyCode === 13) e.preventDefault();
+		});
+		_ame.manual.list.on('click', 'a', _ame.manual.loadCity);
+	/* manual location input end */
+
+	/* options start */
+		_ame.el.main.temp.on('click', _ame.switchUnits);
+		_ame.el.options.unit.on('click', _ame.switchUnits);
+		_ame.el.options.location.on('click', _ame.interface.switch);
+	/* options end */
+
+	/* ui start */
+		$(window).on('resize', _ame.interface.orient);
+		$('h3').on('click', _ame.interface.togglePreferences);
+	/* ui end */
 });
 
 }());
