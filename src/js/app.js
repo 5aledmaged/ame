@@ -325,7 +325,7 @@ let _ame = {
 			if (w > 768) {
 				const elWidth = Math.floor(_ame.manual.input.outerWidth());
 				const elHeight = Math.floor($('html').outerHeight() - _ame.manual.input.offset().top - _ame.manual.input.outerHeight());
-				const elLeft = Math.floor(_ame.manual.input.offset().left - _ame.manual.form.offset().left);
+				const elLeft = Math.floor( _ame.manual.input.offset().left - _ame.manual.form.offset().left - Number.parseInt(_ame.manual.form.css('padding-left'), 10) );
 				console.log(elHeight);
 				el.css({
 					width: elWidth,
