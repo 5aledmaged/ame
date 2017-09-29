@@ -1,6 +1,9 @@
-/* global $ */
 'use strict';
 import '../css/styles.less';
+import $ from 'jquery';
+import Raven from 'raven-js';
+Raven.config('https://d581b40eda8a444a928b39d898380a05@sentry.io/212857')
+	.install();
 
 (function(){
 /* main object containing app state */
@@ -180,11 +183,11 @@ let _ame = {
 		return Math.round((9/5) * c + 32);
 	},
 	toggleTemp: function _ameToggleTemp() {
-		console.info('toggleTemp called');
+		console.log('toggleTemp called');
 		let u = 'fahrenheit';
 
 		if (this.options.unit === 'C') {
-			console.info('converting from celsius to fahrenheit');
+			console.log('converting from celsius to fahrenheit');
 			this.options.unit = 'F';
 			this.el.main.temp.attr('data-label', 'switch to celsuis');
 			this.data.main.temp = _ame.toFahrenheit(this.data.main.temp);
@@ -198,7 +201,7 @@ let _ame = {
 			u = 'fahrenheit';
 		}
 		else if (this.options.unit === 'F') {
-			console.info('converting from fahrenheit to celsius');
+			console.log('converting from fahrenheit to celsius');
 			this.options.unit = 'C';
 			this.el.main.temp.attr('data-label', 'switch to fahrenheit');
 			this.data.main.temp = _ame.toCelsius(this.data.main.temp);
@@ -280,7 +283,7 @@ let _ame = {
 			const w = $('body').prop('clientWidth');
 			const p = bod.hasClass('portrait');
 			const l = bod.hasClass('landscape');
-			if (h > w || w <= 480) {
+			if (h > w || w <= 768) {
 				if (!p) bod.addClass('portrait');
 				if (l) bod.removeClass('landscape');
 			}
@@ -320,19 +323,25 @@ let _ame = {
 			_ame.manual.list.hide(); // hide the list initially
 		},
 		listSetup: function _ameManualListSetup() {
-			const w = $('body').width();
+			//const w = $('body').width();
 			const el = _ame.manual.list;
-			if (w > 768) {
-				const elWidth = Math.floor(_ame.manual.input.outerWidth());
-				const elHeight = Math.floor($('html').outerHeight() - _ame.manual.input.offset().top - _ame.manual.input.outerHeight());
-				const elLeft = Math.floor( _ame.manual.input.offset().left - _ame.manual.form.offset().left - Number.parseInt(_ame.manual.form.css('padding-left'), 10) );
+			let elWidth, elLeft;
+			const elHeight = Math.floor($('html').outerHeight() - _ame.manual.input.offset().top - _ame.manual.input.outerHeight());
+			if ($('html').hasClass('landscape')) {
+				elWidth = Math.floor(_ame.manual.input.outerWidth());
+				elLeft = Math.floor( _ame.manual.input.offset().left - _ame.manual.form.offset().left - Number.parseInt(_ame.manual.form.css('padding-left'), 10) );
 				console.log(elHeight);
-				el.css({
-					width: elWidth,
-					height: elHeight,
-					left: elLeft
-				});
 			}
+			else {
+				// const form = _ame.manual.form;
+				elWidth = _ame.manual.input.outerWidth();
+				elLeft = 0 /* Number.parseInt(form.css('padding-left'), 10) */;
+			}
+			el.css({
+				width: elWidth,
+				height: elHeight,
+				left: elLeft
+			});
 			el.html('');
 		},
 		show: function _ameManualShow() {
@@ -458,10 +467,10 @@ let _ame = {
 
 const getLocation = function(e) {
 	e.preventDefault();
-	console.info('getLocation called');
+	console.log('getLocation called');
 
 	if (navigator.geolocation) {
-		console.info('getLocation supported');
+		console.log('getLocation supported');
 		let locationOptions = {
 			enableHighAccuracy: true,
 			timeout: 30000,
@@ -483,7 +492,7 @@ const checkDifference = function() {
 		mnts = (time - call) / 60000;
 	}
 
-	console.info('last api call was ' + mnts + ' minutes ago');
+	console.log('last api call was ' + mnts + ' minutes ago');
 	return (mnts >= 10) ? true : false;
 };
 
@@ -498,7 +507,7 @@ const fromInput = function(e) {
 };
 
 const getWeather = function(loc, noGeo) {
-	console.info('getWeather called');
+	console.log('getWeather called');
 	if (noGeo === undefined) {
 		let lat = loc.coords.latitude;
 		let lon = loc.coords.longitude;
@@ -510,7 +519,7 @@ const getWeather = function(loc, noGeo) {
 	let mainRequest = api + 'weather' + parameters;
 	let hourRequest = api + 'forecast' + parameters;
 	let dayRequest = api + 'forecast/daily' + parameters;
-	console.info('requesting weather data from openweather.org');
+	console.log('requesting weather data from openweather.org');
 	$.when(
 		$.get(mainRequest, setWeather, 'json'),
 		$.get(hourRequest, setHourlyForecast, 'json'),
@@ -528,7 +537,7 @@ const getWeather = function(loc, noGeo) {
 };
 
 const setWeather = function(response) {
-	console.info('set weather called');
+	console.log('set weather called');
 	let assignLoc = function() {
 		try {
 			_ame.options.loc = response.id;
@@ -555,11 +564,11 @@ const setWeather = function(response) {
 
 	_ame.el.main.update();
 
-	console.info('main weather data is set');
+	console.log('main weather data is set');
 };
 
 const setHourlyForecast = function(response) {
-	console.info('hourly forecast called');
+	console.log('hourly forecast called');
 
 	for (let i = 0; i < _ame.el.hour.time.length; i++) {
 		let forecast = response.list[i];
@@ -570,11 +579,11 @@ const setHourlyForecast = function(response) {
 		}
 	}
 	_ame.el.hour.update();
-	console.info('hourly weather data is set');
+	console.log('hourly weather data is set');
 };
 
 const setDailyForecast = function(response) {
-	console.info('daily forecast called');
+	console.log('daily forecast called');
 
 	for (let i = 0; i < _ame.el.day.time.length; i++) {
 		let daily = response.list[i+1];
@@ -591,7 +600,7 @@ const setDailyForecast = function(response) {
 
 	_ame.el.day.update();
 
-	console.info('daily weather data is set');
+	console.log('daily weather data is set');
 };
 
 
@@ -601,10 +610,10 @@ $(function() {
 	_ame.manual.setup();
 	_ame.manual.loadCountry();
 	if (localStorage.options) {
-		console.info('localStorage.options found!');
+		console.log('localStorage.options found!');
 		_ame.options = JSON.parse(localStorage.options);
 		if (typeof _ame.options.loc === 'number') {
-			console.info('using locally saved location: ' + _ame.options.loc);
+			console.log('using locally saved location: ' + _ame.options.loc);
 			if (checkDifference()) {
 				const loc = '&id=' + _ame.options.loc;
 				getWeather(loc, true);
@@ -620,13 +629,13 @@ $(function() {
 				_ame.interface.switch();
 			}
 		}
-		else {
+		/* else {
 			console.warn('No localStorage location saved! waiting for user input');
-		}
+		} */
 	}
-	else {
+	/* else {
 		console.warn('localStorage.options is not found! waiting for user input.');
-	}
+	} */
 
 	/* Event Listeners
 	========================================= */
