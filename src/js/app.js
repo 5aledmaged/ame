@@ -329,13 +329,13 @@ let _ame = {
 			const elHeight = Math.floor($('html').outerHeight() - _ame.manual.input.offset().top - _ame.manual.input.outerHeight());
 			if ($('html').hasClass('landscape')) {
 				elWidth = Math.floor(_ame.manual.input.outerWidth());
-				elLeft = Math.floor( _ame.manual.input.offset().left - _ame.manual.form.offset().left - Number.parseInt(_ame.manual.form.css('padding-left'), 10) );
+				elLeft = Math.floor( _ame.manual.input.offset().left - _ame.manual.form.offset().left - parseInt(_ame.manual.form.css('padding-left'), 10) );
 				console.log(elHeight);
 			}
 			else {
 				// const form = _ame.manual.form;
 				elWidth = _ame.manual.input.outerWidth();
-				elLeft = 0 /* Number.parseInt(form.css('padding-left'), 10) */;
+				elLeft = 0 /* parseInt(form.css('padding-left'), 10) */;
 			}
 			el.css({
 				width: elWidth,
