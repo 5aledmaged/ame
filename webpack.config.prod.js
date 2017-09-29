@@ -5,10 +5,12 @@ import WebpackSHAHash from 'webpack-sha-hash';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
+	resolve: {
+		extensions: ['*', '.js', '.json']
+	},
 	devtool: 'source-map',
 	entry: {
-		vendor: path.resolve(__dirname, 'src', 'js', 'vendor.js'),
-		app: path.resolve(__dirname, 'src', 'js', 'app.js')
+		app: path.resolve(__dirname, 'src', 'js', 'app')
 	},
 	target: 'web',
 	output: {
@@ -18,22 +20,18 @@ export default {
 	},
 	plugins: [
 		new webpack.LoaderOptionsPlugin({
-			context: '/',
 			minimize: true,
 			debug: false,
 			noInfo: true // set to false to see a list of every file being bundled.
-		}),
-		new webpack.ProvidePlugin({
-			'$': 'jquery'
 		}),
 		// Generate an external css file with a hash in the filename
 		new ExtractTextPlugin('[name].[contenthash].css'),
 		// Hash the files using SHA-256 so that their names change when the content changes.
 		new WebpackSHAHash(),
 		// Use CommonsChunkPlugin to create a sepreate bundle of vendor libraries
-		new webpack.optimize.CommonsChunkPlugin({
+		/* new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor'
-		}),
+		}), */
 		// Create HTML file that includes reference to bundled JS.
 		new HtmlWebpackPlugin({
 			template: 'src/index.html',
@@ -52,14 +50,23 @@ export default {
 			inject: true
 		}),
 		// Minify JS
-		new webpack.optimize.UglifyJsPlugin()
+		new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
 	],
 	module: {
 		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				use: ['babel-loader', 'eslint-loader']
+				use: [
+						'babel-loader',
+						{
+							loader: 'eslint-loader',
+							options: {
+								failOnError: true
+							}
+						},
+						'strip-loader?strip[]=console.log,strip[]=console.warn,strip[]=console.error'
+					]
 			},
 			{
 				test: /\.less$/,
@@ -68,9 +75,11 @@ export default {
 					use: [
 						{
 							loader: 'css-loader?sourceMap',
-							options: { url: false }
+							options: {
+								url: false
+							}
 						},
-						{ loader: 'less-loader' }
+						'less-loader'
 					]
 				})
 			}
