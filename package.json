@@ -13,7 +13,7 @@
     "prebuild": "npm run clean-dist",
     "build": "babel-node buildScripts/build.js",
     "postbuild": "cp -r src/img dist/ && cp src/CNAME dist/ && babel-node buildScripts/distServer.js",
-    "deploy": "cd dist && surge",
+    "deploy": "cd dist && surge .",
     "teardown": "cd dist && surge teardown"
   },
   "repository": {
