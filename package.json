@@ -6,13 +6,15 @@
   "scripts": {
     "prestart": "nsp check",
     "start": "babel-node buildScripts/srcServer.js",
-    "share": "lt --port 3000",
+    "share": "lt --port 3000 --subdomain ameapp",
     "lint": "eslint .",
     "test": "mocha --reporter progress buildScripts/testSetup.js \"src/**/*.test.js\"",
     "clean-dist": "rimraf ./dist && mkdir dist",
     "prebuild": "npm run clean-dist",
     "build": "babel-node buildScripts/build.js",
-    "postbuild": "cp -r src/img/ dist/ && babel-node buildScripts/distServer.js"
+    "postbuild": "cp -r src/img dist/ && cp src/CNAME dist/ && babel-node buildScripts/distServer.js",
+    "deploy": "cd dist && surge",
+    "teardown": "cd dist && surge teardown"
   },
   "repository": {
     "type": "git",
@@ -53,8 +55,11 @@
     "mocha": "^3.5.0",
     "nsp": "^2.7.0",
     "open": "0.0.5",
+    "postcss-loader": "^2.0.6",
     "rimraf": "^2.6.1",
+    "strip-loader": "^0.1.2",
     "style-loader": "^0.18.2",
+    "surge": "^0.19.0",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
     "webpack-dev-middleware": "^1.12.0",
