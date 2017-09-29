@@ -1,5 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500" height="250" viewBox="0 0 500 250">
-	<path style="stroke-width:2px;stroke:#2c3e50;fill:white;" d="M40,230 C35,195 30,190 30,160 A50,50 0 1,1 130,160 V200 V140 A60,60 0 1,1 250,140 V180 V140 A60,60 0 1,1 370,140 V200 V160 A50,50 0 1,1 470,160 C470,190 465,195 460,230"/>
-	<path style="stroke-width:2px;stroke:#2c3e50;" d="M40,160 H120"/>
-	<path style="stroke-width:2px;stroke:#2c3e50;" d="M380,160 H460"/>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 480 225" preserveAspectRatio="xMinYMin meet">
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				#drop path, .cloud {
+					stroke-width: 0;
+					fill: white;
+					fill-opacity: 1;
+				}
+				g {
+					mask: url(#logo);
+				}
+				#rain-drops rect {
+					fill: #0069c0;
+				}
+				#bg {
+					fill: url(#rain-drops);
+				}
+				#logo path {
+					stroke-width: 25px;
+					stroke: white;
+					fill-opacity: 0;
+				}
+			]]>
+		</style>
+		<symbol id="drop">
+			<path d="M0 10c0 2.8 2.2 5 5 5s5-2.2 5-5S5 0 5 0 0 7.2 0 10z" fill="#e74c3c"/>
+		</symbol>
+		<pattern id="rain-drops" patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(15)">
+			<rect x="0" y="0" width="40" height="40"/>
+			<use href="#drop" x="5" y="2.5"/>
+			<use href="#drop" x="25" y="22.5"/>
+			<animateTransform
+			            attributeName="patternTransform"
+			            begin="0s"
+			            dur="20s"
+			            type="translate"
+			            from="0 0"
+			            to="80 1000"
+			            repeatCount="indefinite" 
+			/>
+		</pattern>
+		<mask id="logo">
+			<path d="M30,200 V105 A80,80 0 0,1 110,25 V200 M30,105 H110 M160,200 V25 A80,80 0 0,1 240,105 A80,80 0 0,1 320,25 V200 M450,187.5 A80,80 0 0,1 370,107.5 V25 A80,80 0 0,1 450,105 H370"/>
+		</mask>
+		<filter id="a">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+			<feOffset dy="3" result="offsetblur"/>
+			<feFlood flood-color="#000" flood-opacity=".4"/>
+			<feComposite in2="offsetblur" operator="in"/>
+			<feMerge>
+				<feMergeNode/>
+				<feMergeNode in="SourceGraphic"/>
+			</feMerge>
+		</filter>
+	</defs>
+	<path filter="url(#a)" style="stroke-width:29px;stroke:#0069c0;fill-opacity:0;" d="M30,202V105 A80,80 0 0,1 110,25 V202 M30,105 H110 M160,202 V25 A80,80 0 0,1 240,107 A80,80 0 0,1 320,25 V202 M452,187.5 A80,80 0 0,1 370,107.5 V25 A80,80 0 0,1 450,105 H370"/>
+	<g>
+		<rect id="bg" x="0" y="0" width="480" height="225"/>
+		<path class="cloud" d="M0,0 V30 A30,30 0 0,0 60,30 A40,40 0 0,0 120,35 A45,45 0 0,0 180,45 A50,50 0 0,0 260,30 A30,30 0 0,0 300,30 A40,40 0 0,0 360,30 A30,30 0 0,0 420,30 A35,35 0 0,0 480,25 A30,30 0 0,0 480,30 V0 z"/>
+	</g>
 </svg>
