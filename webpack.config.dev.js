@@ -5,8 +5,7 @@ import webpack from 'webpack';
 export default {
 	devtool: 'inline-source-map',
 	entry: {
-		vendor: path.resolve(__dirname, 'src', 'js', 'vendor.js'),
-		main: path.resolve(__dirname, 'src', 'js', 'app.js')
+		app: path.resolve(__dirname, 'src', 'js', 'app.js')
 	},
 	target: 'web',
 	output: {
@@ -19,9 +18,6 @@ export default {
 		new HtmlWebpackPlugin({
 			template: 'src/index.html',
 			inject: true
-		}),
-		new webpack.ProvidePlugin({
-			'$': 'jquery'
 		})
 	],
 	module: {
