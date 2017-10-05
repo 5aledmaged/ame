@@ -552,7 +552,6 @@ const setWeather = function(response) {
 	if (assignLoc()) {
 		_ame.storage.options();
 	}
-	$('h3').on('click', _ame.interface.togglePreferences);
 
 	_ame.data.main = {
 		temp: _ame.setTemp(response.main.temp),
