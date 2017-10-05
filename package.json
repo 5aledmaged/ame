@@ -55,6 +55,7 @@
     "mocha": "^3.5.0",
     "nsp": "^2.7.0",
     "open": "0.0.5",
+    "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6",
     "rimraf": "^2.6.1",
     "strip-loader": "^0.1.2",
@@ -65,5 +66,11 @@
     "webpack-dev-middleware": "^1.12.0",
     "webpack-md5-hash": "0.0.5",
     "webpack-sha-hash": "^1.1.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "IE > 8",
+    "last 5 versions",
+    "not IE < 9"
+  ]
 }
