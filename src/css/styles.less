@@ -125,6 +125,7 @@ h3 {
 .ame-preferences {
 	position: fixed;
 	width: 25%;
+	min-height: 96%;
 }
 
 	.ame-logo {
@@ -147,6 +148,65 @@ h3 {
 .ame-forecast {
 	width: 67.5%;
 	margin: 0 0 0 auto;
+}
+
+/* ==============================================================================
+	=contacts area
+===============================================================================*/
+
+.ame-contacts {
+	font-size: .8rem;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	margin: 0 0 .5rem;
+
+	p {
+		padding: 0 0 .5rem;
+	}
+
+	strong {
+		font-weight: bold;
+	}
+
+	a, a:visited {
+		color: @t;
+		text-decoration: none;
+	}
+
+	a {
+		display: block;
+		margin: .1rem 0;
+		padding: .1rem 0 .1rem 1.6rem;
+		background-size: auto 100%;
+		background-repeat: no-repeat;
+
+		&:hover {
+			color: @t;
+			text-decoration: underline;
+			cursor: pointer;
+		}
+	}
+}
+
+.ame-upwork {
+	background-image: url('../img/social/upwork.svg');
+}
+
+.ame-so {
+	background-image: url('../img/social/so.svg');
+}
+
+.ame-twitter {
+	background-image: url('../img/social/twitter.svg');
+}
+
+.ame-in {
+	background-image: url('../img/social/in.svg');
+}
+
+.ame-mail {
+	background-image: url('../img/social/mail.svg');
 }
 
 /* ==============================================================================
