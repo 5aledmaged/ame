@@ -74,12 +74,29 @@ export default {
 					fallback: 'style-loader',
 					use: [
 						{
-							loader: 'css-loader?sourceMap',
+							loader: 'css-loader',
 							options: {
-								url: false
+								url: false,
+								importLoaders: 1,
+								sourceMap: true
 							}
 						},
-						'less-loader'
+						{
+							loader: 'postcss-loader',
+							options: {
+								sourceMap: true,
+								plugins: [
+									require('postcss-import')(),
+									require('autoprefixer')()
+								  ]
+							}
+						},
+						{
+							loader: 'less-loader',
+							options: {
+								sourceMap: true
+							}
+						}
 					]
 				})
 			}
