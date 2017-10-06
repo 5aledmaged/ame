@@ -262,6 +262,7 @@ let _ame = {
 		location: $('.ame-locator'),
 		locationButton: $('.ame-auto-loc'),
 		state: 'location',
+		orientation: 'unknown',
 		switch: function _ameInterfaceSwitch() {
 			if (_ame.interface.state === 'location') {
 				_ame.interface.main.removeClass('hidden');
@@ -286,14 +287,19 @@ let _ame = {
 			if (h > w || w <= 768) {
 				if (!p) bod.addClass('portrait');
 				if (l) bod.removeClass('landscape');
+				_ame.interface.orientation = 'portrait';
 			}
 			else {
 				if (!l) bod.addClass('landscape');
 				if (p) bod.removeClass('portrait');
+				_ame.interface.orientation = 'landscape';
 			}
 		},
 		togglePreferences: function _ameInterfaceTogglePreferences() {
-			$('.ame-pref-wrap').slideToggle(200);
+			const orient = _ame.interface.orientation;
+			if (orient === 'portrait') {
+				$('.ame-pref-wrap').slideToggle(200);
+			}
 		}
 	},
 	manual: {
