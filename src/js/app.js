@@ -662,7 +662,7 @@ $(function() {
 
 	/* ui start */
 		$(window).on('resize', _ame.interface.orient);
-		$('h3').on('click', _ame.interface.togglePreferences);
+		$('.ame-pref-toggle').on('click', _ame.interface.togglePreferences);
 	/* ui end */
 });
 
