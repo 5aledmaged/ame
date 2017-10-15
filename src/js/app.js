@@ -300,6 +300,12 @@ let _ame = {
 			if (orient === 'portrait') {
 				$('.ame-pref-wrap').slideToggle(200);
 			}
+		},
+		toggleContacts: function _ameInterfaceToggleContacts() {
+			const orient = _ame.interface.orientation;
+			if (orient === 'portrait') {
+				$('.ame-contacts').slideToggle(200);
+			}
 		}
 	},
 	manual: {
@@ -663,7 +669,10 @@ $(function() {
 	/* ui start */
 		$(window).on('resize', _ame.interface.orient);
 		$('.ame-pref-toggle').on('click', _ame.interface.togglePreferences);
+		$('.ame-contacts-toggle').on('click', _ame.interface.toggleContacts);
 	/* ui end */
+	/* const locito = '&id=361058';
+	getWeather(locito, true); */
 });
 
 }());

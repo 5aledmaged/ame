@@ -16,6 +16,14 @@
 	<link rel="mask-icon" href="../safari-pinned-tab.svg" color="#2c3e50">
 	<meta name="apple-mobile-web-app-title" content="Ame">
 	<meta name="application-name" content="Ame"> -->
+
+	<!--[if IE 6]>
+		<style type="text/css">
+			.ame-auto-loc, .ame-auto-or, .ame-manual {
+				float: left;
+			}
+		</style>
+	<![endif]-->
 </head>
 <body>
 
@@ -35,8 +43,7 @@
 		<form class="ame-manual hidden">
 			<label for="location">Enter a country:</label>
 			<input type="text" placeholder="enter a country" name="location">
-			<ul class="ame-loc-match">
-			</ul>
+			<ul class="ame-loc-match"></ul>
 			<input type="submit">
 		</form>
 		<p class="ame-manual-loader">loading...</p>
@@ -52,8 +59,10 @@
 						<img src="img/logo.png" width="100%">
 					</object>
 				</div>
-				<h3 class="ame-pref-toggle">Preferences</h3>
-				<h3 class="ame-contacts-toggle">Preferences</h3>
+				<aside class="ame-toggles">
+					<h3 class="ame-contacts-toggle">app by Khaled, <em>contact me</em></h3>
+					<h3 class="ame-pref-toggle">Preferences</h3>
+				</aside>
 			</div>
 			<div class="ame-pref-wrap">
 				<ul class="preferences">
