@@ -10,12 +10,12 @@ export default {
 	},
 	devtool: 'source-map',
 	entry: {
-		app: path.resolve(__dirname, 'src', 'js', 'app')
+		app: path.resolve(__dirname, '..', 'src', 'js', 'app')
 	},
 	target: 'web',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
-		publicPath: '/',
+		path: path.resolve(__dirname, '..', 'dist'),
+		publicPath: '../',
 		filename: '[name].[chunkhash].js'
 	},
 	plugins: [
@@ -25,7 +25,7 @@ export default {
 			noInfo: true // set to false to see a list of every file being bundled.
 		}),
 		// Generate an external css file with a hash in the filename
-		new ExtractTextPlugin('[name].[contenthash].css'),
+		new ExtractTextPlugin('./css/[name].[contenthash].css'),
 		// Hash the files using SHA-256 so that their names change when the content changes.
 		new WebpackSHAHash(),
 		// Use CommonsChunkPlugin to create a sepreate bundle of vendor libraries
@@ -47,7 +47,8 @@ export default {
 				minifyCSS: true,
 				minifyURLs: true
 			},
-			inject: true
+			inject: true,
+			prod: true
 		}),
 		// Minify JS
 		new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
@@ -58,19 +59,20 @@ export default {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				use: [
-						{
-							loader: 'babel-loader',
-							options: { sourceMap: true }
-						},
-						{
-							loader: 'eslint-loader',
-							options: {
-								failOnError: true,
-								sourceMap: true
-							}
-						},
-						'strip-loader?strip[]=console.log,strip[]=console.warn,strip[]=console.error'
-					]
+					{
+						loader: 'babel-loader',
+						options: { sourceMap: true }
+					},
+					{
+						loader: 'eslint-loader',
+						options: {
+							failOnError: true,
+							sourceMap: true,
+							configFile: '.eslintrc.json'
+						}
+					},
+					'strip-loader?strip[]=console.log,strip[]=console.warn,strip[]=console.error'
+				]
 			},
 			{
 				test: /\.less$/,
@@ -92,7 +94,7 @@ export default {
 								plugins: [
 									require('postcss-import')(),
 									require('autoprefixer')()
-								  ]
+								]
 							}
 						},
 						{

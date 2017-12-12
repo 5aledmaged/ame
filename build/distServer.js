@@ -1,9 +1,10 @@
+/*eslint-disable no-console */
 import express from 'express';
-import path from 'path';
 import open from 'open';
 import compression from 'compression';
+import chalk from 'chalk';
 
-/*eslint-disable no-console */
+console.log(chalk.bgBlue.whiteBright('starting dist server'));
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -11,11 +12,7 @@ const app = express();
 app.use(express.static('dist'));
 app.use(compression());
 
-app.get('*', function(req, res) {
-	res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
-
-app.listen(port, function(err) {
+app.listen(port, function (err) {
 	if (err) {
 		console.log(err);
 	} else {

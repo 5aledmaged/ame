@@ -1,5 +1,8 @@
-# Dist directory
+# ignored directories
 dist
+
+# ignore mock api files
+src/api/*
 
 # Logs
 logs
@@ -60,5 +63,5 @@ typings/
 # dotenv environment variables file
 .env
 
-# CNAME file
+# CNAME file used by surge
 src/CNAME
