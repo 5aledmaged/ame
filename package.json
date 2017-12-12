@@ -6,7 +6,7 @@
 	"scripts": {
 		"prestart": "nsp check",
 		"start": "run-p start:src api lint:watch",
-		"start:src": "babel-node build/srcServer.js",
+		"start:src": "nodemon --exec babel-node build/srcServer.js",
 		"start:dist": "babel-node build/distServer.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./",
