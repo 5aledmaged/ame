@@ -25,17 +25,51 @@ export default {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				use: ['babel-loader', 'eslint-loader']
+				use: [
+					{
+						loader: 'babel-loader',
+						options: { sourceMap: true }
+					},
+					{
+						loader: 'eslint-loader',
+						options: {
+							failOnError: true,
+							sourceMap: true
+						}
+					}
+				]
 			},
 			{
 				test: /\.less$/,
 				use: [
-					{ loader: 'style-loader' },
 					{
-						loader: "css-loader",
-						options: { url: false }
+						loader: 'style-loader',
+						options: { sourceMaps: true }
 					},
-					{ loader: 'less-loader' }
+					{
+						loader: 'css-loader',
+						options: {
+							url: false,
+							importLoaders: 1,
+							sourceMap: true
+						}
+					},
+					{
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true,
+							plugins: [
+								require('postcss-import')(),
+								require('autoprefixer')()
+							]
+						}
+					},
+					{
+						loader: 'less-loader',
+						options: {
+							sourceMap: true
+						}
+					}
 				]
 			}
 		]

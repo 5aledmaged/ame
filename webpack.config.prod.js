@@ -58,11 +58,15 @@ export default {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				use: [
-						'babel-loader',
+						{
+							loader: 'babel-loader',
+							options: { sourceMap: true }
+						},
 						{
 							loader: 'eslint-loader',
 							options: {
-								failOnError: true
+								failOnError: true,
+								sourceMap: true
 							}
 						},
 						'strip-loader?strip[]=console.log,strip[]=console.warn,strip[]=console.error'
