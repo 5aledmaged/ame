@@ -365,7 +365,7 @@ let _ame = {
 			_ame.manual.loader.show();
 		},
 		loadCountry: function _ameManualLoadCountry() {
-			$.getJSON('http://ame-api.herokuapp.com/country.json', function (data) {
+			$.getJSON('https://ame-api.herokuapp.com/country.json', function (data) {
 				_ame.manual.country = data;
 				console.log('load country success', _ame.manual.country);
 				_ame.manual.input.on('keyup change', _ame.manual.country, _ame.manual.populate);
@@ -373,7 +373,7 @@ let _ame = {
 				_ame.manual.listSetup();
 			})
 			.fail(function (err) {
-				_ame.error(err);
+				_ame.error('loading country list error' + err, true);
 			});
 		},
 		loadCity: function _ameManualLoadCity() {
@@ -383,7 +383,7 @@ let _ame = {
 			const id = el.attr('data-id');
 			_ame.manual.selectedCountry = el.text();
 			console.log('selected country: ' + _ame.manual.selectedCountry);
-			$.ajax('http://ame-api.herokuapp.com/endpoint', {
+			$.ajax('https://ame-api.herokuapp.com/endpoint', {
 				type: 'POST',
 				data: 'id=' + id,
 				crossDomain: true,
@@ -403,7 +403,7 @@ let _ame = {
 					_ame.manual.input.focus();
 				},
 				error  : function _ameManualLoadCityError(jqXHR, status, error) {
-					_ame.error('load city error\njqXHR: '+ jqXHR +'\nstatus: '+ status +'\nerror: '+ error);
+					_ame.error('load city error\njqXHR: '+ jqXHR +'\nstatus: '+ status +'\nerror: '+ error, true);
 				}
 			});
 		},
@@ -526,16 +526,16 @@ const getWeather = function(loc, noGeo) {
 		loc = '&lat=' + lat + '&lon=' + lon;
 	}
 	console.log('loc: ' + loc);
-	let api = 'http://api.openweathermap.org/data/2.5/';
+	let api = 'https://api.openweathermap.org/data/2.5/';
 	let parameters = '?appid=b956d9bf2e3b92b3dd0354995602a3e6' + loc;
 	let mainRequest = api + 'weather' + parameters;
 	let hourRequest = api + 'forecast' + parameters;
 	let dayRequest = api + 'forecast/daily' + parameters;
 	console.log('requesting weather data from openweather.org');
 	$.when(
-		$.get(mainRequest, setWeather, 'json'),
-		$.get(hourRequest, setHourlyForecast, 'json'),
-		$.get(dayRequest, setDailyForecast, 'json')
+		$.getJSON(mainRequest, setWeather),
+		$.getJSON(hourRequest, setHourlyForecast),
+		$.getJSON(dayRequest, setDailyForecast)
 	)
 	.done(function() {
 		_ame.updateOptions();
@@ -544,7 +544,7 @@ const getWeather = function(loc, noGeo) {
 		localStorage.setItem('lastCall', Date.now());
 	})
 	.fail(function(result) {
-		_ame.error('promises error: ' + result.statusText, true);
+		_ame.error('weather api error: ' + result.statusText, true);
 	});
 };
 
@@ -671,6 +671,7 @@ $(function() {
 		$('.ame-pref-toggle').on('click', _ame.interface.togglePreferences);
 		$('.ame-contacts-toggle').on('click', _ame.interface.toggleContacts);
 	/* ui end */
+
 	/* const locito = '&id=361058';
 	getWeather(locito, true); */
 });
