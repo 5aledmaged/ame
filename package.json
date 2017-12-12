@@ -14,7 +14,8 @@
     "build": "babel-node buildScripts/build.js",
     "postbuild": "cp -r src/img dist/ && cp src/CNAME dist/ && babel-node buildScripts/distServer.js",
     "deploy": "cd dist && surge .",
-    "teardown": "cd dist && surge teardown"
+    "teardown": "cd dist && surge teardown",
+    "serve-dist": "babel-node buildScripts/distServer.js"
   },
   "repository": {
     "type": "git",
@@ -35,10 +36,8 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
-    "chalk": "^2.1.0",
-    "compression": "^1.7.0",
+    "compression": "~1.7.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.7",
     "eslint": "^4.6.0",
@@ -53,7 +52,7 @@
     "less-loader": "^4.0.5",
     "localtunnel": "^1.8.3",
     "mocha": "^3.5.0",
-    "nsp": "^2.7.0",
+    "nsp": "^2.8.1",
     "open": "0.0.5",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6",
