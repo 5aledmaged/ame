@@ -234,11 +234,6 @@ let _ame = {
 			}, 1500);
 		});
 	},
-	error: function _ameError(err, show) {
-		const el = $('.ame-location-error');
-		console.error(err);
-		if (show) el.text(err).removeClass('hidden');
-	},
 	locationError: function _ameLocationError(e) {
 		let m = 'location error';
 		switch (e.code) {
