@@ -3,6 +3,7 @@ import '../css/styles.less';
 import $ from 'jquery';
 import Raven from 'raven-js';
 Raven.config('https://d581b40eda8a444a928b39d898380a05@sentry.io/212857').install();
+import errorHandler from './modules/error-handler';
 
 (function(){
 /* main object containing app state */
@@ -251,7 +252,7 @@ let _ame = {
 				m = 'browser is taking too long to respond, please enter your location manually or try again later.';
 				break;
 		}
-		_ame.error('error: ' + m, true);
+		errorHandler('error: ' + m, true);
 	},
 	updateOptions: function ameUpdateOptions() {
 
