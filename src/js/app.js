@@ -368,7 +368,7 @@ let _ame = {
 				_ame.manual.listSetup();
 			})
 			.fail(function (err) {
-				_ame.error('loading country list error' + err, true);
+				errorHandler('loading country list error' + err, true);
 			});
 		},
 		loadCity: function _ameManualLoadCity() {
@@ -398,7 +398,7 @@ let _ame = {
 					_ame.manual.input.focus();
 				},
 				error  : function _ameManualLoadCityError(jqXHR, status, error) {
-					_ame.error('load city error\njqXHR: '+ jqXHR +'\nstatus: '+ status +'\nerror: '+ error, true);
+					errorHandler('load city error\njqXHR: '+ jqXHR +'\nstatus: '+ status +'\nerror: '+ error, true);
 				}
 			});
 		},
@@ -439,13 +439,13 @@ let _ame = {
 					localStorage.setItem(key, data);
 				}
 				catch (err) {
-					_ame.error(err);
+					errorHandler(err);
 					return false;
 				}
 				return true;
 			}
 			else {
-				_ame.error('localStorage not supported');
+				errorHandler('localStorage not supported');
 				return false;
 			}
 		},
@@ -456,12 +456,12 @@ let _ame = {
 					return data;
 				}
 				catch (e) {
-					_ame.error(e);
+					errorHandler(e);
 					return false;
 				}
 			}
 			else {
-				_ame.error('localStorage not supported');
+				errorHandler('localStorage not supported');
 				return false;
 			}
 		},
@@ -486,7 +486,7 @@ const getLocation = function(e) {
 		navigator.geolocation.getCurrentPosition(getWeather, _ame.locationError, locationOptions);
 	}
 	else {
-		_ame.error('getLocation not supported');
+		errorHandler('getLocation not supported');
 	}
 };
 
@@ -539,7 +539,7 @@ const getWeather = function(loc, noGeo) {
 		localStorage.setItem('lastCall', Date.now());
 	})
 	.fail(function(result) {
-		_ame.error('weather api error: ' + result.statusText, true);
+		errorHandler('weather api error: ' + result.statusText, true);
 	});
 };
 
@@ -551,7 +551,7 @@ const setWeather = function(response) {
 			return true;
 		}
 		catch(e) {
-			_ame.error(e);
+			errorHandler(e);
 			return false;
 		}
 	}
