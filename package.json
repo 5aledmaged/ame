@@ -18,7 +18,8 @@
     "api": "json-server --watch src/api/db.json --port 3001",
     "prebuild": "rm -rf ./dist && mkdir dist",
     "build": "babel-node build/build.js",
-    "postbuild": "npm run start:dist",
+    "postbuild": "run-s copy-static-assets start:dist",
+    "copy-static-assets": "cp -r src/img dist/",
     "update": "ncu -u"
   },
   "repository": {
