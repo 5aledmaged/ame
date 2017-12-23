@@ -19,7 +19,7 @@
     "prebuild": "rm -rf ./dist && mkdir dist",
     "build": "babel-node build/build.js && babel src/app.js -o dist/app.js",
     "postbuild": "run-s copy-static-assets start:dist",
-    "copy-static-assets": "cp -r src/img dist/public",
+    "copy-static-assets": "cp -r src/{img,data} dist/public",
     "update": "ncu -u"
   },
   "repository": {
