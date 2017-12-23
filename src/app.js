@@ -1,4 +1,16 @@
-import './style.less';
-console.log('hello stupid!!!!!!!!!!!!');
-const body = document.getElementsByTagName('body')[0];
-body.innerHTML += '<p>hello from js file</p>';
+import express from 'express';
+import path from 'path';
+
+const ame = express();
+const port = process.env.PORT ||5000;
+
+ame.use(express.static(path.resolve(__dirname, 'public')))
+	.get('/', (req, res) => res.render('index.html'))
+	.listen(port, (err) => {
+		if (err) {
+			console.log(err);
+		}
+		else {
+			console.log('ame-app.heroku.com');
+		}
+	});

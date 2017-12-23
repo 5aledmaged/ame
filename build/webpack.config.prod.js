@@ -14,7 +14,7 @@ export default {
 	},
 	target: 'web',
 	output: {
-		path: path.resolve(__dirname, '..', 'dist'),
+		path: path.resolve(__dirname, '..', 'dist', 'public'),
 		publicPath: '../',
 		filename: '[name].[chunkhash].js'
 	},

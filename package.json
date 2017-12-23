@@ -17,9 +17,9 @@
     "preapi": "npm run mock",
     "api": "json-server --watch src/api/db.json --port 3001",
     "prebuild": "rm -rf ./dist && mkdir dist",
-    "build": "babel-node build/build.js",
+    "build": "babel-node build/build.js && babel src/app.js -o dist/app.js",
     "postbuild": "run-s copy-static-assets start:dist",
-    "copy-static-assets": "cp -r src/img dist/",
+    "copy-static-assets": "cp -r src/img dist/public",
     "update": "ncu -u"
   },
   "repository": {
