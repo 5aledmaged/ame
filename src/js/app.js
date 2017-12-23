@@ -360,7 +360,7 @@ let _ame = {
 			_ame.manual.loader.show();
 		},
 		loadCountry: function _ameManualLoadCountry() {
-			$.getJSON('https://ame-api.herokuapp.com/country.json', function (data) {
+			$.getJSON('/data/country.json', function (data) {
 				_ame.manual.country = data;
 				console.log('load country success', _ame.manual.country);
 				_ame.manual.input.on('keyup change', _ame.manual.country, _ame.manual.populate);
@@ -378,7 +378,7 @@ let _ame = {
 			const id = el.attr('data-id');
 			_ame.manual.selectedCountry = el.text();
 			console.log('selected country: ' + _ame.manual.selectedCountry);
-			$.ajax('https://ame-api.herokuapp.com/endpoint', {
+			$.ajax('/cities', {
 				type: 'POST',
 				data: 'id=' + id,
 				crossDomain: true,
