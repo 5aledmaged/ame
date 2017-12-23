@@ -1,6 +1,3 @@
-# ignored directories
-dist
-
 # ignore mock api files
 src/api/*
 
