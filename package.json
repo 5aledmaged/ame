@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "ame app",
   "main": "src/app.js",
+  "engines": {
+    "node": "8.9.1"
+  },
   "scripts": {
     "prestart": "nsp check",
     "start": "run-p start:src api lint:watch",
