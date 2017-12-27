@@ -10,7 +10,7 @@ const requestHandler = new ReqHand();
 requestHandler.get('main', {id: 361058});
 
 const ame = express();
-const port = process.env.PORT ||5000;
+const port = process.env.PORT || 5000;
 
 ame.use(cors());
 ame.use(compression());
