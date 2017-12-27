@@ -15,7 +15,7 @@ ame.use(express.static(path.resolve(__dirname, 'public')));
 
 ame.get('/', (req, res) => { res.render('index.html') });
 
-ame.post('/cities', function (req, res) {
+ame.post('/cities', (req, res) => {
 	const id = req.body.id; // country
 	fs.readFile(path.join(__dirname, 'public', 'data', 'city.json'), 'utf-8', function (err, cities) {
 		if (err) {
