@@ -505,7 +505,6 @@ const checkDifference = function() {
 
 const fromInput = function(e) {
 	e.preventDefault();
-	console.log('hi ihi ihihihihi ');
 	const loc = '&id=' + $(this).attr('data-id');
 	console.log('location: ' + loc);
 	getWeather(loc, true);
