@@ -20,8 +20,8 @@
     "preapi": "npm run mock",
     "api": "json-server --watch src/api/db.json --port 3001",
     "prebuild": "rm -rf ./dist && mkdir dist",
-    "build": "babel-node build/build.js && babel src/app.js -o dist/app.js",
-    "postbuild": "run-s copy-static-assets start:dist",
+    "build": "babel-node build/build.js && babel src/app.js -o dist/app.js && babel src/modules -d dist/modules",
+    "postbuild": "run-s copy-static-assets",
     "copy-static-assets": "cp -r src/img src/data dist/public",
     "update": "ncu -u"
   },
@@ -42,7 +42,8 @@
     "ejs": "~2.5.7",
     "express": "~4.16.2",
     "jquery": "~3.2.1",
-    "raven-js": "~3.20.1"
+    "raven-js": "~3.20.1",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "babel-cli": "~6.26.0",
