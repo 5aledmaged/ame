@@ -7,11 +7,11 @@ const RequestHandler = function () {
 		day: 'forecast/daily'
 	};
 
-	this.get = function (type, location) {
-		if (typeof type === undefined) {
+	this.get = function (type, location, callback) {
+		if (typeof type === 'undefined') {
 			console.error('forecast type is undefined');
 		}
-		else if (typeof location === undefined) {
+		else if (typeof location === 'undefined') {
 			console.error('location object is undefined');
 		}
 
@@ -23,11 +23,11 @@ const RequestHandler = function () {
 		};
 		Object.assign(options.qs, location);
 
-		request(options, function requestHandlerCallback(err, res, body) {
-			console.log('err ', err);
-			// console.log('res ', res.statusCode);
-			console.log('body ', JSON.parse(body).main);
-		});
+		if (callback && typeof callback === 'function') {
+			request(options, callback);
+		}
+
+		// return forecast;
 	};
 
 };
