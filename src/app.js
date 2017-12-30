@@ -1,13 +1,15 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import path from 'path';
 import compression from 'compression';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import fs from 'fs';
-import ReqHand from './modules/request-handler';
+import apiRouter from './modules/apiRouter';
 
-const requestHandler = new ReqHand();
-requestHandler.get('main', {id: 361058});
+/* const requestHandler = new ReqHand();
+requestHandler.get('main', {id: 361058}); */
 
 const ame = express();
 const port = process.env.PORT || 5000;
@@ -16,6 +18,8 @@ ame.use(cors());
 ame.use(compression());
 ame.use(bodyParser.urlencoded({ extended: true }));
 ame.use(express.static(path.resolve(__dirname, 'public')));
+
+ame.use('/api', apiRouter);
 
 ame.get('/', (req, res) => {
 	res.render('index.html');
@@ -39,6 +43,6 @@ ame.listen(port, (err) => {
 		console.log(err);
 	}
 	else {
-		console.log('ame-app.heroku.com');
+		console.log('app started');
 	}
 });
