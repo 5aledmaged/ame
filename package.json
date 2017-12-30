@@ -7,9 +7,9 @@
     "node": "8.9.1"
   },
   "scripts": {
-    "prestart": "nsp check",
+    "security check": "nsp check",
     "start": "run-p start:src api lint:watch",
-    "start:src": "nodemon --exec babel-node build/srcServer.js",
+    "start:src": "nodemon --exec babel-node src/app.js",
     "start:dist": "babel-node build/distServer.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./",
@@ -53,6 +53,7 @@
     "chalk": "~2.3.0",
     "copy-webpack-plugin": "~4.2.1",
     "css-loader": "~0.28.7",
+    "dotenv": "^4.0.0",
     "eslint": "~4.13.1",
     "eslint-loader": "~1.9.0",
     "eslint-plugin-import": "~2.8.0",
