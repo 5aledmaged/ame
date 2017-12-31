@@ -1,6 +1,6 @@
 import rp from 'request-promise-native';
 
-const forecastLoader = function (location, callback) {
+const forecastLoader = (location, callback) => {
 		if (typeof location === 'undefined') {
 			return console.error('location object is undefined');
 		}
