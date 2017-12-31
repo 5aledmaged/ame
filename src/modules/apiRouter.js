@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import RequestHandler from '../modules/request-handler';
+import forecastLoader from '../modules/forecast-loader';
 
 const apiRouter = express.Router();
 
