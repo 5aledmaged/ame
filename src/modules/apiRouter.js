@@ -12,22 +12,14 @@ apiRouter.route('/')
 	})
 	.post((req, res) => {
 		if (typeof req.body.loc === 'undefined' || !req.body.loc) {
-			return res.status(500).send('error loc is not specified');
+			res.status(500).send('error loc is not specified');
+			return;
 		}
-
-		const forecastLoader = new RequestHandler();
 		const loc = JSON.parse(req.body.loc);
-
-		const weatherProcess = (error, response, body) => {
-			if (error) console.log('err ', error);
-			// console.log('res ', res.statusCode);
-			const forecast = JSON.parse(body);
+		const sendResponse = forecast => {
 			res.json(forecast);
 		};
-
-		forecastLoader.get('main', loc, weatherProcess);
-
-		//res.send(`loc is ${req.body.loc}`);
+		forecastLoader(loc, sendResponse);
 	});
 
 export default apiRouter;
