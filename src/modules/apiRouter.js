@@ -12,7 +12,7 @@ apiRouter.route('/')
 	})
 	.post((req, res) => {
 		if (typeof req.body.loc === 'undefined' || !req.body.loc) {
-			res.status(500).send('error loc is not specified');
+			res.status(400).send('error location is not specified');
 			return;
 		}
 		const loc = JSON.parse(req.body.loc);
