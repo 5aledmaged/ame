@@ -153,8 +153,6 @@ let _ame = {
 			location: $('.option.location')
 		}
 	},
-	// day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-	// month: ['January','February','March','April','May','June','July','August','September','October','November','December'],
 	formatTemp: function(t) {
 		return t + '\u00b0' + this.options.unit;
 	},
