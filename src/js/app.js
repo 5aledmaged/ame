@@ -317,7 +317,6 @@ let _ame = {
 			$.ajax('/cities', {
 				type: 'POST',
 				data: 'id=' + id,
-				crossDomain: true,
 				success: function _ameManualLoadCitySuccess(data) {
 					_ame.manual.city = data;
 					console.log('success for post request');
@@ -439,17 +438,17 @@ const checkDifference = function() {
 	return (mnts >= 10) ? true : false;
 };
 
-const fromInput = function(e) {
-	e.preventDefault();
-	const loc = '&id=' + $(this).attr('data-id');
+const fromInput = function(event) {
+	event.preventDefault();
+	const loc = $(this).attr('data-id');
 	console.log('location: ' + loc);
 	getWeather(loc, true);
 	_ame.manual.input.val('');
 	_ame.manual.list.hide();
 };
 
-const getWeather = function(loc, noGeo) {
-	console.log('getWeather called');
+const getWeather = (location, noGeo) => {
+	/* console.log('getWeather called');
 	if (noGeo === undefined) {
 		let lat = loc.coords.latitude;
 		let lon = loc.coords.longitude;
@@ -475,6 +474,39 @@ const getWeather = function(loc, noGeo) {
 	})
 	.fail(function(result) {
 		errorHandler('weather api error: ' + result.statusText, true);
+	}); */
+	if (noGeo === undefined) { /* location is a geolocation object */
+		const lat = location.coords.latitude;
+		const lon = location.coords.longitude;
+		location = {
+			loc: JSON.stringify( {lat, lon} )
+		};
+	}
+	else if (noGeo === true) {
+		const id = location;
+		location = {
+			loc: JSON.stringify({id})
+		};
+	}
+
+	$.ajax({
+		url: '/api',
+		method: 'POST',
+		data: location,
+		success: (res, textStatus) => {
+			if (textStatus === 'success') {
+				_ame.forecast = res; // save response to forecast
+				_ame.el.update(); // update forecast panels
+				_ame.interface.switch(); // switch to forecast view
+			}
+			else {
+				errorHandler('server responded with an error', true);
+			}
+		},
+		error: (jqxhr, textStatus, error) => {
+			const err = textStatus + ', ' + error;
+			errorHandler('Request Failed: ' + err, true);
+		}
 	});
 };
 
@@ -564,9 +596,7 @@ $(function() {
 				_ame.data = JSON.parse(localStorage.data);
 				_ame.el.main.update();
 				_ame.el.hour.update();
-				// let $locInput = $('.ame-locator form');e();
 				_ame.el.day.update();
-				_ame.updateOptions();
 				_ame.interface.switch();
 			}
 		}
