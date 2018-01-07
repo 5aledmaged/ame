@@ -8,9 +8,6 @@ import bodyParser from 'body-parser';
 import fs from 'fs';
 import apiRouter from './modules/apiRouter';
 
-/* const requestHandler = new ReqHand();
-requestHandler.get('main', {id: 361058}); */
-
 const ame = express();
 const port = process.env.PORT || 5000;
 
@@ -27,7 +24,7 @@ ame.get('/', (req, res) => {
 
 ame.post('/cities', (req, res) => {
 	const id = req.body.id; // country
-	fs.readFile(path.join(__dirname, 'public', 'data', 'city.json'), 'utf-8', function (err, cities) {
+	fs.readFile(path.join(__dirname, 'public', 'data', 'city.json'), 'utf-8', (err, cities) => {
 		if (err) {
 			res.status(500).send(err);
 		}
