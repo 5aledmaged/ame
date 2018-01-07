@@ -12,71 +12,7 @@ let _ame = {
 		'unit': 'C',
 		'loc': undefined
 	},
-	data: {
-		'main': {
-			'temp': 0,
-			'icon': '01d',
-			'location': 'unknown',
-			'info': 'unknown',
-			'time': 'unknown'
-		},
-		'hour': [
-			{
-				'temp': 0,
-				'icon': '01d',
-				'time': 'unknown'
-			},
-			{
-				'temp': 0,
-				'icon': '01d',
-				'time': 'unknown'
-			},
-			{
-				'temp': 0,
-				'icon': '01d',
-				'time': 'unknown'
-			},
-			{
-				'temp': 0,
-				'icon': '01d',
-				'time': 'unknown'
-			}
-		],
-		'day': [
-			{
-				'temp': {
-					'min': 0,
-					'max': 0
-				},
-				'icon': '01d',
-				'time': 'unknown'
-			},
-			{
-				'temp': {
-					'min': 0,
-					'max': 0
-				},
-				'icon': '01d',
-				'time': 'unknown'
-			},
-			{
-				'temp': {
-					'min': 0,
-					'max': 0
-				},
-				'icon': '01d',
-				'time': 'unknown'
-			},
-			{
-				'temp': {
-					'min': 0,
-					'max': 0
-				},
-				'icon': '01d',
-				'time': 'unknown'
-			}
-		]
-	},
+	forecast: null,
 	el: {
 		'main': {
 			'temp': $('.ame-main-temp'),
