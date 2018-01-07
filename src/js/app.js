@@ -14,67 +14,69 @@ let _ame = {
 	},
 	forecast: null,
 	el: {
-		'main': {
-			'temp': $('.ame-main-temp'),
-			'icon': $('.main-icon'),
-			'location': $('.preferences .location'),
-			'info': $('.ame-main-info'),
-			'time': $('.main-forecast .update'),
-			'update': function () {
-				console.log('main weather update');
-				let data = _ame.data.main;
-				this.temp.text(_ame.formatTemp(data.temp));
-				_ame.el.options.updateUnit();
-				this.icon.attr('src', 'img/icons/'+ data.icon + '.svg');
-				this.location.text('Location: ' + data.location);
-				this.info.text(data.info);
-				/*let mainTime = typeof data.time === 'object' ? data.time : new Date(data.time); // Date object if not local
-				this.time.text('updated ' + _ame.day[mainTime.getDay()] + ', '+ mainTime.getDate() + ' '
-										+ _ame.month[mainTime.getMonth()] + ' ' + ('0' + mainTime.getHours()).slice(-2)
-										+ ':' + ('0' + mainTime.getMinutes()).slice(-2));*/
-			}
+		main: {
+			temp: $('.ame-main-temp'),
+			icon: $('.main-icon'),
+			location: $('.preferences .location'),
+			info: $('.ame-main-info'),
+			time: $('.main-forecast .update'),
 		},
-		'hour': {
+		hour: {
 			'temp': $('.hour-panel .data-column .temprature'),
 			'icon': $('.hour-panel .data-column img'),
 			'time': $('.hour-panel .data-column .time'),
-			'update': function () {
-				console.log('hourly weather update');
-				let data = _ame.data.hour
-				this.temp.each(function(i, el) {
-					$(el).text(_ame.formatTemp(data[i].temp));
-				});
-				this.icon.each(function(i, el) {
-					$(el).attr('src', 'img/icons/'+ data[i].icon +'.svg');
-				});
-				this.time.each(function(i, el) {
-					$(el).text(data[i].time);
-				});
-			}
 		},
-		'day': {
+		day: {
 			'temp': {
 				'min': $('.day-panel .data-column .min-temp'),
 				'max': $('.day-panel .data-column .max-temp')
 			},
 			'icon': $('.day-panel .data-column img'),
 			'time': $('.day-panel .data-column .time'),
-			'update': function () {
-				console.log('daily weather update');
-				let data = _ame.data.day;
-				$.each(this.temp, function(key, val) {
-					val.each(function(i, el) {
-						let t = data[i].temp[key];
-						$(el).text(_ame.formatTemp(t));
+		},
+		update: () => {
+			/* update main forecast */
+			let forecast = _ame.forecast.main; // set forecast to main forecast data
+			let panel = _ame.el.main; // panel to be updated = main forecast panel
+
+			panel.temp.text(forecast.temp); // update temprature
+			panel.icon.attr('src', 'img/icons/' + forecast.icon + '.svg'); // update icon
+			panel.location.text('Location: ' + forecast.location); // update location
+			panel.info.text(forecast.info); // update description
+			//_ame.el.options.updateUnit();
+
+
+			/* update hourly forecast */
+			forecast = _ame.forecast.hourly;
+			panel = _ame.el.hour;
+
+			panel.temp.each(function (i, column) { // i = index, column = data column to be edited
+				$(column).text(forecast[i].temp);
+			});
+			panel.icon.each(function (i, column) {
+				$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
+			});
+			panel.time.each(function (i, column) {
+				$(column).text(forecast[i].time);
+			});
+
+
+			/* update daily forecast */
+			forecast = _ame.forecast.daily;
+			panel = _ame.el.day;
+
+			$.each(panel.temp, function (key, val) { // key = maximun or minimum temprature of the day
+				val.each(function (i, column) {
+					let t = forecast[i].temp[key];
+					$(column).text(t);
 					});
 				});
-				this.icon.each(function(i, el) {
-					$(el).attr('src', 'img/icons/'+ data[i].icon +'.svg');
+			panel.icon.each(function (i, column) {
+				$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
 				});
-				this.time.each(function(i, el) {
-					$(el).text(data[i].time);
+			panel.time.each(function (i, column) {
+				$(column).text(forecast[i].time);
 				});
-			}
 		},
 		note: {
 			main: $('.ame-note'),
