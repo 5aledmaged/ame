@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Raven from 'raven-js';
 Raven.config('https://d581b40eda8a444a928b39d898380a05@sentry.io/212857').install();
 import errorHandler from './modules/error-handler';
+import * as storage from './modules/storage';
 import prefs from './modules/preferences';
 import forecast from './modules/forecast';
 
@@ -85,7 +86,7 @@ let _ame = {
 		}
 		this.updateTemp();
 		this.el.options.updateUnit();
-		_ame.storage.options();
+		prefs.save();
 		localStorage.setItem('data', JSON.stringify(_ame.data));
 		this.notify('<strong>changed default unit to ' + u + '</strong><br>preferences saved!');
 	},
@@ -138,7 +139,7 @@ let _ame = {
 				_ame.interface.main.addClass('hidden');
 				_ame.interface.state = 'location';
 				prefs.current.location = undefined;
-				_ame.storage.options();
+				prefs.save();
 			}
 			console.log('switched to ' + _ame.interface.state + ' ui.');
 		},
@@ -299,45 +300,7 @@ let _ame = {
 				_ame.manual.list.hide();
 			}
 		}
-	},
-	storage: {
-		save: function _ameStorageSave(key, data) {
-			if (window.localStorage) {
-				try {
-					localStorage.setItem(key, data);
 				}
-				catch (err) {
-					errorHandler(err);
-					return false;
-				}
-				return true;
-			}
-			else {
-				errorHandler('localStorage not supported');
-				return false;
-			}
-		},
-		load: function _ameStorageLoad(key) {
-			if (window.localStorage) {
-				try {
-					const data = localStorage.loadItem(key);
-					return data;
-				}
-				catch (e) {
-					errorHandler(e);
-					return false;
-				}
-			}
-			else {
-				errorHandler('localStorage not supported');
-				return false;
-			}
-		},
-		options: function _ameStorageOptions() {
-			const o = JSON.stringify(prefs.current);
-			_ame.storage.save('options', o);
-		}
-	}
 };
 
 const getLocation = function(e) {
