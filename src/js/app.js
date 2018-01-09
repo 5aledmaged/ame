@@ -21,7 +21,7 @@ let _ame = {
 			info: $('.ame-main-info'),
 			time: $('.main-forecast .update'),
 		},
-		hour: {
+		hourly: {
 			'temp': $('.hour-panel .data-column .temprature'),
 			'icon': $('.hour-panel .data-column img'),
 			'time': $('.hour-panel .data-column .time'),
@@ -49,7 +49,7 @@ let _ame = {
 
 			/* update hourly forecast */
 			forecast = _ame.forecast.hourly;
-			panel = _ame.el.hour;
+			panel = _ame.el.hourly;
 
 			panel.temp.each(function (i, column) { // i = index, column = data column to be edited
 				$(column).text(forecast[i].temp[unit]);
@@ -64,7 +64,7 @@ let _ame = {
 
 			/* update daily forecast */
 			forecast = _ame.forecast.daily;
-			panel = _ame.el.day;
+			panel = _ame.el.daily;
 
 			$.each(panel.temp, function (key, val) { // key = maximun or minimum temprature of the day
 				val.each(function (i, column) {
@@ -596,8 +596,8 @@ $(function() {
 				console.log('loading weather from local storage');
 				_ame.data = JSON.parse(localStorage.data);
 				_ame.el.main.update();
-				_ame.el.hour.update();
-				_ame.el.day.update();
+				_ame.el.hourly.update();
+				_ame.el.daily.update();
 				_ame.interface.switch();
 			}
 		}
