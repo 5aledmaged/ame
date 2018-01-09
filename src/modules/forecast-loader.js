@@ -14,15 +14,15 @@ const forecastLoader = (location, callback) => {
 
 		const options = {
 			main: {
-				uri: `https://api.openweathermap.org/data/2.5/weather`,
+				uri: 'https://api.openweathermap.org/data/2.5/weather',
 				qs
 			},
 			hourly: {
-				uri: `https://api.openweathermap.org/data/2.5/forecast`,
+				uri: 'https://api.openweathermap.org/data/2.5/forecast',
 				qs
 			},
 			daily: {
-				uri: `https://api.openweathermap.org/data/2.5/forecast/daily`,
+				uri: 'https://api.openweathermap.org/data/2.5/forecast/daily',
 				qs
 			}
 		};
