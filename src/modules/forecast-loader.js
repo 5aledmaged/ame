@@ -33,9 +33,16 @@ const forecastLoader = (location, callback) => {
 			daily: []
 		};
 
+		const processTemprature = temprature => {
+			return {
+				c: Math.round(temprature) + '\u00b0C',
+				f: Math.round((9 / 5) * temprature + 32) + '\u00b0F'
+			}
+		}
+
 		const processMainForecast = res => {
 			forecast.main = {
-				temp: res.main.temp,
+				temp: processTemprature(res.main.temp),
 				icon: res.weather[0].icon,
 				location: res.name + ', ' + res.sys.country,
 				info: res.weather[0].description,
@@ -46,7 +53,7 @@ const forecastLoader = (location, callback) => {
 		const processHourlyForecast = res => {
 			for (let i = 0; i <= 3; i++) { /* save forecast for next 4 hours only */
 				forecast.hourly[i] = {
-					temp: res.list[i].main.temp,
+					temp: processTemprature(res.list[i].main.temp),
 					icon: res.list[i].weather[0].icon,
 					time: res.list[i].dt_txt.split(' ')[1].substr(0, 5)
 				};
@@ -58,8 +65,8 @@ const forecastLoader = (location, callback) => {
 				const date = new Date(res.list[i+1].dt * 1000);
 				forecast.daily[i] = {
 					temp: {
-						min: res.list[i+1].temp.min,
-						max: res.list[i+1].temp.max
+						min: processTemprature(res.list[i + 1].temp.min),
+						max: processTemprature(res.list[i + 1].temp.max)
 					},
 					icon: res.list[i+1].weather[0].icon,
 					time: date.getDate() + '/' + (date.getMonth() + 1)
