@@ -300,7 +300,7 @@ let _ame = {
 				_ame.manual.list.hide();
 			}
 		}
-				}
+	}
 };
 
 const getLocation = function(e) {
@@ -392,6 +392,8 @@ const getWeather = (location, noGeo) => {
 		success: (res, textStatus) => {
 			if (textStatus === 'success') {
 				forecast.data = res; // save response to forecast
+				prefs.current.location = res.id;
+				prefs.save();
 				forecast.update(); // update forecast panels
 				_ame.interface.switch(); // switch to forecast view
 			}
@@ -405,73 +407,6 @@ const getWeather = (location, noGeo) => {
 		}
 	});
 };
-
-const setWeather = function(response) {
-	console.log('set weather called');
-	let assignLoc = function() {
-		try {
-			_ame.options.loc = response.id;
-			return true;
-		}
-		catch(e) {
-			errorHandler(e);
-			return false;
-		}
-	}
-
-	if (assignLoc()) {
-		_ame.storage.options();
-	}
-
-	_ame.data.main = {
-		temp: _ame.setTemp(response.main.temp),
-		icon: response.weather[0].icon,
-		location: response.name +', '+ response.sys.country,
-		info: response.weather[0].description,
-		time: new Date()
-	}
-
-	_ame.el.main.update();
-
-	console.log('main weather data is set');
-};
-
-const setHourlyForecast = function(response) {
-	console.log('hourly forecast called');
-
-	for (let i = 0; i < _ame.el.hour.time.length; i++) {
-		let forecast = response.list[i];
-		_ame.data.hour[i] = {
-			temp: _ame.setTemp(forecast.main.temp),
-			icon: forecast.weather[0].icon,
-			time: forecast.dt_txt.split(' ')[1].substr(0, 5)
-		}
-	}
-	_ame.el.hour.update();
-	console.log('hourly weather data is set');
-};
-
-const setDailyForecast = function(response) {
-	console.log('daily forecast called');
-
-	for (let i = 0; i < _ame.el.day.time.length; i++) {
-		let daily = response.list[i+1];
-		let date = new Date(daily.dt * 1000);
-		_ame.data.day[i] = {
-			temp: {
-				min: _ame.setTemp(daily.temp.min),
-				max: _ame.setTemp(daily.temp.max)
-			},
-			icon: daily.weather[0].icon,
-			time: date.getDate() + '/' + (date.getMonth()+1)
-		}
-	}
-
-	_ame.el.day.update();
-
-	console.log('daily weather data is set');
-};
-
 
 $(function() {
 	_ame.interface.orient();

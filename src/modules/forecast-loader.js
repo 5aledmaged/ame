@@ -48,6 +48,7 @@ const forecastLoader = (location, callback) => {
 				info: res.weather[0].description,
 				time: new Date()
 			};
+			forecast.id = res.id;	// city id
 		};
 
 		const processHourlyForecast = res => {
