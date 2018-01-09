@@ -41,4 +41,6 @@ class Preferences {
 	}
 }
 
-export default Preferences;
+const prefs = new Preferences();
+
+export default prefs;
