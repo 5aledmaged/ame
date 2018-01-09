@@ -35,11 +35,12 @@ let _ame = {
 			'time': $('.day-panel .data-column .time'),
 		},
 		update: () => {
+			const unit = prefs.current.unit;
 			/* update main forecast */
 			let forecast = _ame.forecast.main; // set forecast to main forecast data
 			let panel = _ame.el.main; // panel to be updated = main forecast panel
 
-			panel.temp.text(forecast.temp); // update temprature
+			panel.temp.text(forecast.temp[unit]); // update temprature
 			panel.icon.attr('src', 'img/icons/' + forecast.icon + '.svg'); // update icon
 			panel.location.text('Location: ' + forecast.location); // update location
 			panel.info.text(forecast.info); // update description
@@ -51,7 +52,7 @@ let _ame = {
 			panel = _ame.el.hour;
 
 			panel.temp.each(function (i, column) { // i = index, column = data column to be edited
-				$(column).text(forecast[i].temp);
+				$(column).text(forecast[i].temp[unit]);
 			});
 			panel.icon.each(function (i, column) {
 				$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
@@ -67,7 +68,7 @@ let _ame = {
 
 			$.each(panel.temp, function (key, val) { // key = maximun or minimum temprature of the day
 				val.each(function (i, column) {
-					let t = forecast[i].temp[key];
+					let t = forecast[i].temp[key][unit];
 					$(column).text(t);
 					});
 				});
