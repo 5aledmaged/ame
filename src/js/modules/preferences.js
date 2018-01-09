@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import errorHandler from './error-handler';
+import * as storage from './storage';
 
 class Preferences {
 	constructor() {
@@ -11,27 +12,26 @@ class Preferences {
 		this.locationElement = $('.option.location');
 	}
 
-	load() {
-		if (window.localStorage) {
-			try {
-				let prefs = localStorage.loadItem('options');
-				prefs = JSON.parse(prefs);
-				Object.assign(this.current, prefs);
-				console.log('successfully loaded preferences from localstorage');
-				return true;
-			}
-			catch (e) {
-				errorHandler(e);
-				return false;
-			}
+	static load() {
+		let localPrefs = storage.load('prefs');
+		if (localPrefs) {
+			localPrefs = JSON.parse(localPrefs);
+			Object.assign(this.current, localPrefs);
+			console.log('successfully loaded preferences from localstorage');
+			return true;
 		}
 		else {
-			// errorHandler('localStorage not supported');
+			errorHandler('prefs were not loaded from localStorage');
 			return false;
 		}
 	}
 
-	switchUnits() {
+	static save() {
+		const currentPrefs = JSON.stringify(this.current);
+		storage.save('prefs', currentPrefs);
+	}
+
+	static switchUnits() {
 		if (this.current.unit === 'c') {
 			this.current.unit = 'f';
 		}
