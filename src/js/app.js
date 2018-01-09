@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Raven from 'raven-js';
 Raven.config('https://d581b40eda8a444a928b39d898380a05@sentry.io/212857').install();
 import errorHandler from './modules/error-handler';
+import Preferences from './modules/preferences';
+const prefs = new Preferences();
 
 (function(){
 /* main object containing app state */
@@ -87,7 +89,7 @@ let _ame = {
 		options: {
 			unit: $('.option.unit'),
 			updateUnit: function _ameUpdateUnit() {
-				_ame.el.options.unit.text('Unit: \u00b0' + _ame.options.unit);
+				prefs.unitElement.text('Unit: \u00b0' + prefs.current.unit);
 			},
 			location: $('.option.location')
 		}
@@ -111,7 +113,7 @@ let _ame = {
 	},
 	setTemp: function _ameSetTemp(t) {
 		t = t - 273;
-		return _ame.options.unit === 'C' ? Math.round(t) : _ame.toFahrenheit(t);
+		return prefs.current.unit === 'C' ? Math.round(t) : _ame.toFahrenheit(t);
 	},
 	toCelsius: function _ameToCelsius(f) {
 		return Math.round((5/9) * (f - 32));
@@ -205,7 +207,7 @@ let _ame = {
 				_ame.interface.location.removeClass('hidden');
 				_ame.interface.main.addClass('hidden');
 				_ame.interface.state = 'location';
-				_ame.options.loc = undefined;
+				prefs.current.location = undefined;
 				_ame.storage.options();
 			}
 			console.log('switched to ' + _ame.interface.state + ' ui.');
@@ -402,7 +404,7 @@ let _ame = {
 			}
 		},
 		options: function _ameStorageOptions() {
-			const o = JSON.stringify(_ame.options);
+			const o = JSON.stringify(prefs.current);
 			_ame.storage.save('options', o);
 		}
 	}
@@ -583,13 +585,12 @@ $(function() {
 	_ame.manual.initialSetup();
 	_ame.manual.setup();
 	_ame.manual.loadCountry();
-	if (localStorage.options) {
-		console.log('localStorage.options found!');
-		_ame.options = JSON.parse(localStorage.options);
-		if (typeof _ame.options.loc === 'number') {
-			console.log('using locally saved location: ' + _ame.options.loc);
-			if (checkDifference()) {
-				const loc = '&id=' + _ame.options.loc;
+
+	if ( prefs.load() ) {
+		const loc = prefs.current.location;
+		if (typeof loc === 'number') { // double check prefs were loaded from localstorage
+			console.log('using locally saved location: ' + loc);
+			if ( checkDifference() ) {
 				getWeather(loc, true);
 			}
 			else {
@@ -601,13 +602,7 @@ $(function() {
 				_ame.interface.switch();
 			}
 		}
-		/* else {
-			console.warn('No localStorage location saved! waiting for user input');
-		} */
 	}
-	/* else {
-		console.warn('localStorage.options is not found! waiting for user input.');
-	} */
 
 	/* Event Listeners
 	========================================= */
@@ -623,8 +618,8 @@ $(function() {
 
 	/* options start */
 		_ame.el.main.temp.on('click', _ame.switchUnits);
-		_ame.el.options.unit.on('click', _ame.switchUnits);
-		_ame.el.options.location.on('click', _ame.interface.switch);
+		prefs.unitElement.on('click', _ame.switchUnits);
+		prefs.locationElement.on('click', _ame.interface.switch);
 	/* options end */
 
 	/* ui start */
