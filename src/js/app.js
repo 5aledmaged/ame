@@ -4,83 +4,13 @@ import $ from 'jquery';
 import Raven from 'raven-js';
 Raven.config('https://d581b40eda8a444a928b39d898380a05@sentry.io/212857').install();
 import errorHandler from './modules/error-handler';
-import Preferences from './modules/preferences';
-const prefs = new Preferences();
+import prefs from './modules/preferences';
+import forecast from './modules/forecast';
 
 (function(){
 /* main object containing app state */
 let _ame = {
-	options: {
-		'unit': 'C',
-		'loc': undefined
-	},
-	forecast: null,
 	el: {
-		main: {
-			temp: $('.ame-main-temp'),
-			icon: $('.main-icon'),
-			location: $('.preferences .location'),
-			info: $('.ame-main-info'),
-			time: $('.main-forecast .update'),
-		},
-		hourly: {
-			'temp': $('.hour-panel .data-column .temprature'),
-			'icon': $('.hour-panel .data-column img'),
-			'time': $('.hour-panel .data-column .time'),
-		},
-		day: {
-			'temp': {
-				'min': $('.day-panel .data-column .min-temp'),
-				'max': $('.day-panel .data-column .max-temp')
-			},
-			'icon': $('.day-panel .data-column img'),
-			'time': $('.day-panel .data-column .time'),
-		},
-		update: () => {
-			const unit = prefs.current.unit;
-			/* update main forecast */
-			let forecast = _ame.forecast.main; // set forecast to main forecast data
-			let panel = _ame.el.main; // panel to be updated = main forecast panel
-
-			panel.temp.text(forecast.temp[unit]); // update temprature
-			panel.icon.attr('src', 'img/icons/' + forecast.icon + '.svg'); // update icon
-			panel.location.text('Location: ' + forecast.location); // update location
-			panel.info.text(forecast.info); // update description
-			//_ame.el.options.updateUnit();
-
-
-			/* update hourly forecast */
-			forecast = _ame.forecast.hourly;
-			panel = _ame.el.hourly;
-
-			panel.temp.each(function (i, column) { // i = index, column = data column to be edited
-				$(column).text(forecast[i].temp[unit]);
-			});
-			panel.icon.each(function (i, column) {
-				$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
-			});
-			panel.time.each(function (i, column) {
-				$(column).text(forecast[i].time);
-			});
-
-
-			/* update daily forecast */
-			forecast = _ame.forecast.daily;
-			panel = _ame.el.daily;
-
-			$.each(panel.temp, function (key, val) { // key = maximun or minimum temprature of the day
-				val.each(function (i, column) {
-					let t = forecast[i].temp[key][unit];
-					$(column).text(t);
-					});
-				});
-			panel.icon.each(function (i, column) {
-				$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
-				});
-			panel.time.each(function (i, column) {
-				$(column).text(forecast[i].time);
-				});
-		},
 		note: {
 			main: $('.ame-note'),
 			text: $('.ame-note-txt'),
@@ -498,8 +428,8 @@ const getWeather = (location, noGeo) => {
 		data: location,
 		success: (res, textStatus) => {
 			if (textStatus === 'success') {
-				_ame.forecast = res; // save response to forecast
-				_ame.el.update(); // update forecast panels
+				forecast.data = res; // save response to forecast
+				forecast.update(); // update forecast panels
 				_ame.interface.switch(); // switch to forecast view
 			}
 			else {
@@ -617,7 +547,7 @@ $(function() {
 	/* manual location input end */
 
 	/* options start */
-		_ame.el.main.temp.on('click', _ame.switchUnits);
+		forecast.main.temp.on('click', _ame.switchUnits);
 		prefs.unitElement.on('click', _ame.switchUnits);
 		prefs.locationElement.on('click', _ame.interface.switch);
 	/* options end */
