@@ -6,7 +6,8 @@ const forecastLoader = (location, callback) => {
 		}
 
 		const qs = {
-			appid: process.env.APP_ID
+			appid: process.env.APP_ID,
+			units: 'metric'
 		};
 
 		Object.assign(qs, location);
