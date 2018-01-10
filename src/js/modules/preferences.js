@@ -39,6 +39,11 @@ class Preferences {
 			this.current.unit === 'c';
 		}
 	}
+
+	static updateLocation(id) {
+		this.current.location = id;
+		this.save();
+	}
 }
 
 const prefs = new Preferences();
