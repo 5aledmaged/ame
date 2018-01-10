@@ -1,5 +1,7 @@
 import $ from 'jquery';
 import prefs from './preferences';
+import * as storage from './storage';
+import errorHandler from './error-handler';
 
 class Forecast {
 	constructor() {
@@ -29,7 +31,7 @@ class Forecast {
 		};
 	}
 
-	update() {
+	static update() {
 		const unit = prefs.current.unit;
 		/* update main forecast */
 		let forecast = this.data.main; // set forecast to main forecast data
@@ -72,6 +74,25 @@ class Forecast {
 		panel.time.each(function (i, column) {
 			$(column).text(forecast[i].time);
 		});
+	}
+
+	static save() {
+		const forecast = JSON.stringify(this.data);
+		storage.save('forecast', forecast);
+	}
+
+	static load() {
+		let forecast = storage.load('forecast');
+		if (forecast) {
+			forecast = JSON.parse(forecast);
+			this.data = forecast;
+			console.log('successfully loaded forecast from localStorage');
+			return true;
+		}
+		else {
+			errorHandler('forecast wasn\'t loaded from localStorage');
+			return false;
+		}
 	}
 }
 

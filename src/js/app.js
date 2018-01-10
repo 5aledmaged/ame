@@ -392,10 +392,12 @@ const getWeather = (location, noGeo) => {
 		success: (res, textStatus) => {
 			if (textStatus === 'success') {
 				forecast.data = res; // save response to forecast
-				prefs.current.location = res.id;
-				prefs.save();
 				forecast.update(); // update forecast panels
 				_ame.interface.switch(); // switch to forecast view
+
+				prefs.updateLocation(res.id); // update location id and save locally
+				forecast.save(); // save new forecast data locally
+				storage.save('lastCall', Date.now());	// update lastCall
 			}
 			else {
 				errorHandler('server responded with an error', true);
@@ -422,11 +424,9 @@ $(function() {
 				getWeather(loc, true);
 			}
 			else {
-				console.log('loading weather from local storage');
-				_ame.data = JSON.parse(localStorage.data);
-				_ame.el.main.update();
-				_ame.el.hourly.update();
-				_ame.el.daily.update();
+				console.log('loading weather from localStorage');
+				if ( forecast.load() ) {
+					forecast.update();
 				_ame.interface.switch();
 			}
 		}
