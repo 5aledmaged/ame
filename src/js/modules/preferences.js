@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import errorHandler from './error-handler';
 import * as storage from './storage';
+import forecast from './forecast';
 
 class Preferences {
 	constructor() {
@@ -12,7 +13,7 @@ class Preferences {
 		this.locationElement = $('.option.location');
 	}
 
-	static load() {
+	load() {
 		let localPrefs = storage.load('prefs');
 		if (localPrefs) {
 			localPrefs = JSON.parse(localPrefs);
@@ -26,21 +27,34 @@ class Preferences {
 		}
 	}
 
-	static save() {
+	save() {
 		const currentPrefs = JSON.stringify(this.current);
 		storage.save('prefs', currentPrefs);
 	}
 
-	static switchUnits() {
+	switchUnits() {
 		if (this.current.unit === 'c') {
 			this.current.unit = 'f';
 		}
 		else if (this.current.unit === 'f') {
-			this.current.unit === 'c';
+			this.current.unit = 'c';
 		}
+
+		// update temprature units
+		const unit = this.current.unit;
+		forecast.main.temp.text(forecast.data.main.temp[unit]);
+		forecast.hourly.temp.each(function (i, column) {
+			$(column).text(forecast.data.hourly[i].temp[unit]);
+		});
+		$.each(forecast.daily.temp, function (key, val) {
+			val.each(function (i, column) {
+				let t = forecast.data.daily[i].temp[key][unit];
+				$(column).text(t);
+			});
+		});
 	}
 
-	static updateLocation(id) {
+	updateLocation(id) {
 		this.current.location = id;
 		this.save();
 	}
