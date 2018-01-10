@@ -31,61 +31,61 @@ class Forecast {
 		};
 	}
 
-	static update() {
+	update() {
 		const unit = prefs.current.unit;
 		/* update main forecast */
-		let forecast = this.data.main; // set forecast to main forecast data
+		let forecastData = this.data.main; // set forecast to main forecast data
 		let panel = this.main; // panel to be updated = main forecast panel
 
-		panel.temp.text(forecast.temp[unit]); // update temprature
-		panel.icon.attr('src', 'img/icons/' + forecast.icon + '.svg'); // update icon
-		panel.location.text('Location: ' + forecast.location); // update location
-		panel.info.text(forecast.info); // update description
+		panel.temp.text(forecastData.temp[unit]); // update temprature
+		panel.icon.attr('src', 'img/icons/' + forecastData.icon + '.svg'); // update icon
+		panel.location.text('Location: ' + forecastData.location); // update location
+		panel.info.text(forecastData.info); // update description
 
 
 		/* update hourly forecast */
-		forecast = this.data.hourly;
+		forecastData = this.data.hourly;
 		panel = this.hourly;
 
 		panel.temp.each(function (i, column) { // i = index, column = data column to be edited
-			$(column).text(forecast[i].temp[unit]);
+			$(column).text(forecastData[i].temp[unit]);
 		});
 		panel.icon.each(function (i, column) {
-			$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
+			$(column).attr('src', 'img/icons/' + forecastData[i].icon + '.svg');
 		});
 		panel.time.each(function (i, column) {
-			$(column).text(forecast[i].time);
+			$(column).text(forecastData[i].time);
 		});
 
 
 		/* update daily forecast */
-		forecast = this.data.daily;
+		forecastData = this.data.daily;
 		panel = this.daily;
 
 		$.each(panel.temp, function (key, val) { // key = maximun or minimum temprature of the day
 			val.each(function (i, column) {
-				let t = forecast[i].temp[key][unit];
+				let t = forecastData[i].temp[key][unit];
 				$(column).text(t);
 			});
 		});
 		panel.icon.each(function (i, column) {
-			$(column).attr('src', 'img/icons/' + forecast[i].icon + '.svg');
+			$(column).attr('src', 'img/icons/' + forecastData[i].icon + '.svg');
 		});
 		panel.time.each(function (i, column) {
-			$(column).text(forecast[i].time);
+			$(column).text(forecastData[i].time);
 		});
 	}
 
-	static save() {
-		const forecast = JSON.stringify(this.data);
-		storage.save('forecast', forecast);
+	save() {
+		const forecastData = JSON.stringify(this.data);
+		storage.save('forecast', forecastData);
 	}
 
-	static load() {
-		let forecast = storage.load('forecast');
-		if (forecast) {
-			forecast = JSON.parse(forecast);
-			this.data = forecast;
+	load() {
+		let forecastData = storage.load('forecast');
+		if (forecastData) {
+			forecastData = JSON.parse(forecastData);
+			this.data = forecastData;
 			console.log('successfully loaded forecast from localStorage');
 			return true;
 		}
