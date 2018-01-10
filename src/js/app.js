@@ -316,14 +316,15 @@ const getLocation = function(e) {
 
 const checkDifference = function() {
 	let mnts = 10;
+	let lastCall = storage.load('lastCall');
 
-	if (localStorage.data && localStorage.lastCall) {
-		let time = Date.now();
-		let call = parseInt(localStorage.lastCall, 10);
-		mnts = (time - call) / 60000;
+	if (storage.load('forecast') && lastCall) {
+		const time = Date.now();
+		lastCall = Number.parseInt(lastCall, 10);
+		mnts = (time - lastCall) / 60000;
 	}
 
-	console.log('last api call was ' + mnts + ' minutes ago');
+	console.log(`last api call was ${mnts} minutes ago`);
 	return (mnts >= 10) ? true : false;
 };
 
