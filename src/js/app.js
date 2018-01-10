@@ -16,13 +16,6 @@ let _ame = {
 			main: $('.ame-note'),
 			text: $('.ame-note-txt'),
 			timeoutId: 0
-		},
-		options: {
-			unit: $('.option.unit'),
-			updateUnit: function _ameUpdateUnit() {
-				prefs.unitElement.text('Unit: \u00b0' + prefs.current.unit);
-			},
-			location: $('.option.location')
 		}
 	},
 	formatTemp: function(t) {
@@ -344,33 +337,6 @@ const fromInput = function(event) {
 };
 
 const getWeather = (location, noGeo) => {
-	/* console.log('getWeather called');
-	if (noGeo === undefined) {
-		let lat = loc.coords.latitude;
-		let lon = loc.coords.longitude;
-		loc = '&lat=' + lat + '&lon=' + lon;
-	}
-	console.log('loc: ' + loc);
-	let api = 'https://api.openweathermap.org/data/2.5/';
-	let parameters = '?appid=b956d9bf2e3b92b3dd0354995602a3e6' + loc;
-	let mainRequest = api + 'weather' + parameters;
-	let hourRequest = api + 'forecast' + parameters;
-	let dayRequest = api + 'forecast/daily' + parameters;
-	console.log('requesting weather data from openweather.org');
-	$.when(
-		$.getJSON(mainRequest, setWeather),
-		$.getJSON(hourRequest, setHourlyForecast),
-		$.getJSON(dayRequest, setDailyForecast)
-	)
-	.done(function() {
-		_ame.updateOptions();
-		_ame.interface.switch();
-		localStorage.setItem('data', JSON.stringify(_ame.data));
-		localStorage.setItem('lastCall', Date.now());
-	})
-	.fail(function(result) {
-		errorHandler('weather api error: ' + result.statusText, true);
-	}); */
 	if (noGeo === undefined) { /* location is a geolocation object */
 		const lat = location.coords.latitude;
 		const lon = location.coords.longitude;
