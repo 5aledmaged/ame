@@ -18,74 +18,6 @@ let _ame = {
 			timeoutId: 0
 		}
 	},
-	formatTemp: function(t) {
-		return t + '\u00b0' + this.options.unit;
-	},
-	updateTemp: function() {
-		this.el.main.temp.text(this.formatTemp(this.data.main.temp));
-		_ame.updateOptions(); /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< here */
-		this.el.hour.temp.each(function(i, el) {
-			let t = _ame.data.hour[i].temp;
-			$(el).text(_ame.formatTemp(t));
-		});
-		$.each(this.el.day.temp, function(key, val) {
-			val.each(function(i, el) {
-				let t = _ame.data.day[i].temp[key];
-				$(el).text(_ame.formatTemp(t));
-			});
-		});
-	},
-	setTemp: function _ameSetTemp(t) {
-		t = t - 273;
-		return prefs.current.unit === 'C' ? Math.round(t) : _ame.toFahrenheit(t);
-	},
-	toCelsius: function _ameToCelsius(f) {
-		return Math.round((5/9) * (f - 32));
-	},
-	toFahrenheit: function _ameToFahrenheit(c) {
-		return Math.round((9/5) * c + 32);
-	},
-	toggleTemp: function _ameToggleTemp() {
-		console.log('toggleTemp called');
-		let u = 'fahrenheit';
-
-		if (this.options.unit === 'C') {
-			console.log('converting from celsius to fahrenheit');
-			this.options.unit = 'F';
-			this.el.main.temp.attr('data-label', 'switch to celsuis');
-			this.data.main.temp = _ame.toFahrenheit(this.data.main.temp);
-			$.each(this.data.hour, function(i, val) {
-				val.temp = _ame.toFahrenheit(val.temp);
-			});
-			$.each(this.data.day, function(i, val) {
-				val.temp.min = _ame.toFahrenheit(val.temp.min);
-				val.temp.max = _ame.toFahrenheit(val.temp.max);
-			});
-			u = 'fahrenheit';
-		}
-		else if (this.options.unit === 'F') {
-			console.log('converting from fahrenheit to celsius');
-			this.options.unit = 'C';
-			this.el.main.temp.attr('data-label', 'switch to fahrenheit');
-			this.data.main.temp = _ame.toCelsius(this.data.main.temp);
-			$.each(this.data.hour, function(i, val) {
-				val.temp = _ame.toCelsius(val.temp);
-			});
-			$.each(this.data.day, function(i, val) {
-				val.temp.min = _ame.toCelsius(val.temp.min);
-				val.temp.max = _ame.toCelsius(val.temp.max);
-			});
-			u = 'celsuis';
-		}
-		this.updateTemp();
-		this.el.options.updateUnit();
-		prefs.save();
-		localStorage.setItem('data', JSON.stringify(_ame.data));
-		this.notify('<strong>changed default unit to ' + u + '</strong><br>preferences saved!');
-	},
-	switchUnits: function() {
-		_ame.toggleTemp();
-	},
 	notify: function _ameNotify(msg) {
 		const note = _ame.el.note;
 		clearTimeout(note.timeoutId);
@@ -394,8 +326,8 @@ $(function() {
 				console.log('loading weather from localStorage');
 				if ( forecast.load() ) {
 					forecast.update();
-				_ame.interface.switch();
-			}
+					_ame.interface.switch();
+				}
 				else { // get new data from server, because an error occured while loading data from localStorage
 					getWeather(loc, true);
 				}
@@ -416,8 +348,8 @@ $(function() {
 	/* manual location input end */
 
 	/* options start */
-		forecast.main.temp.on('click', _ame.switchUnits);
-		prefs.unitElement.on('click', _ame.switchUnits);
+	forecast.main.temp.on('click', function () { prefs.switchUnits() });
+		prefs.unitElement.on('click', function() {prefs.switchUnits()});
 		prefs.locationElement.on('click', _ame.interface.switch);
 	/* options end */
 
