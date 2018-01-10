@@ -396,6 +396,10 @@ $(function() {
 					forecast.update();
 				_ame.interface.switch();
 			}
+				else { // get new data from server, because an error occured while loading data from localStorage
+					getWeather(loc, true);
+				}
+			}
 		}
 	}
 
