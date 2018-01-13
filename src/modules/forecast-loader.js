@@ -35,8 +35,8 @@ const forecastLoader = (location, callback) => {
 
 		const processTemprature = temprature => {
 			return {
-				c: Math.round(temprature) + '\u00b0C',
-				f: Math.round((9 / 5) * temprature + 32) + '\u00b0F'
+				c: Math.round(temprature) + '\u00b0c',
+				f: Math.round((9 / 5) * temprature + 32) + '\u00b0f'
 			}
 		}
 
