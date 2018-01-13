@@ -9,27 +9,8 @@ import prefs from './modules/preferences';
 import forecast from './modules/forecast';
 import view from './modules/view';
 
-(function(){
 /* main object containing app state */
 let _ame = {
-	el: {
-		note: {
-			main: $('.ame-note'),
-			text: $('.ame-note-txt'),
-			timeoutId: 0
-		}
-	},
-	notify: function _ameNotify(msg) {
-		const note = _ame.el.note;
-		clearTimeout(note.timeoutId);
-		note.main.hide();
-		note.text.html(msg);
-		note.main.fadeIn(250, function() {
-			note.timeoutId = setTimeout(function() {
-				note.main.fadeOut(250);
-			}, 1500);
-		});
-	},
 	locationError: function _ameLocationError(e) {
 		let m = 'location error';
 		switch (e.code) {
@@ -306,5 +287,3 @@ $(function() {
 	$('.ame-contacts-toggle').on('click', function () { view.toggleContacts() });
 	/* ui end */
 });
-
-}());

@@ -2,6 +2,7 @@ import $ from 'jquery';
 import errorHandler from './error-handler';
 import * as storage from './storage';
 import forecast from './forecast';
+import note from './notification';
 
 class Preferences {
 	constructor() {
@@ -64,6 +65,7 @@ class Preferences {
 	updateUnit() {
 		this.unitElement.text(`Unit: \u00b0${this.current.unit}`);
 		this.save();
+		note.send(`<strong>changed default unit to &deg;${this.current.unit}</strong><br>prefereces saved`);
 	}
 }
 
