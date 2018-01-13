@@ -7,6 +7,7 @@ import errorHandler from './modules/error-handler';
 import * as storage from './modules/storage';
 import prefs from './modules/preferences';
 import forecast from './modules/forecast';
+import view from './modules/view';
 
 (function(){
 /* main object containing app state */
@@ -43,60 +44,6 @@ let _ame = {
 				break;
 		}
 		errorHandler('error: ' + m, true);
-	},
-	updateOptions: function ameUpdateOptions() {
-
-	},
-	interface: {
-		main: $('.ame-main'),
-		location: $('.ame-locator'),
-		locationButton: $('.ame-auto-loc'),
-		state: 'location',
-		orientation: 'unknown',
-		switch: function _ameInterfaceSwitch() {
-			if (_ame.interface.state === 'location') {
-				_ame.interface.main.removeClass('hidden');
-				_ame.interface.location.addClass('hidden');
-				_ame.interface.state = 'main';
-			}
-			else {
-				_ame.interface.location.removeClass('hidden');
-				_ame.interface.main.addClass('hidden');
-				_ame.interface.state = 'location';
-				prefs.current.location = undefined;
-				prefs.save();
-			}
-			console.log('switched to ' + _ame.interface.state + ' ui.');
-		},
-		orient: function _ameInterfaceOrient() {
-			const bod = $('html');
-			const h = $(window).height();
-			const w = $('body').prop('clientWidth');
-			const p = bod.hasClass('portrait');
-			const l = bod.hasClass('landscape');
-			if (h > w || w <= 768) {
-				if (!p) bod.addClass('portrait');
-				if (l) bod.removeClass('landscape');
-				_ame.interface.orientation = 'portrait';
-			}
-			else {
-				if (!l) bod.addClass('landscape');
-				if (p) bod.removeClass('portrait');
-				_ame.interface.orientation = 'landscape';
-			}
-		},
-		togglePreferences: function _ameInterfaceTogglePreferences() {
-			const orient = _ame.interface.orientation;
-			if (orient === 'portrait') {
-				$('.ame-pref-wrap').slideToggle(200);
-			}
-		},
-		toggleContacts: function _ameInterfaceToggleContacts() {
-			const orient = _ame.interface.orientation;
-			if (orient === 'portrait') {
-				$('.ame-contacts').slideToggle(200);
-			}
-		}
 	},
 	manual: {
 		form: $('.ame-manual'),
@@ -292,7 +239,7 @@ const getWeather = (location, noGeo) => {
 			if (textStatus === 'success') {
 				forecast.data = res; // save response to forecast
 				forecast.update(); // update forecast panels
-				_ame.interface.switch(); // switch to forecast view
+				view.switch(); // switch to forecast view
 
 				prefs.updateLocation(res.id); // update location id and save locally
 				forecast.save(); // save new forecast data locally
@@ -310,7 +257,7 @@ const getWeather = (location, noGeo) => {
 };
 
 $(function() {
-	_ame.interface.orient();
+	view.orient();
 	_ame.manual.initialSetup();
 	_ame.manual.setup();
 	_ame.manual.loadCountry();
@@ -326,7 +273,7 @@ $(function() {
 				console.log('loading weather from localStorage');
 				if ( forecast.load() ) {
 					forecast.update();
-					_ame.interface.switch();
+					view.switch();
 				}
 				else { // get new data from server, because an error occured while loading data from localStorage
 					getWeather(loc, true);
@@ -338,7 +285,7 @@ $(function() {
 	/* Event Listeners
 	========================================= */
 	/* core functionality */
-		_ame.interface.locationButton.on('click', getLocation);
+		view.locationButton.on('click', getLocation);
 
 	/* manual location input start */
 		_ame.manual.input.on('keypress', function(e) {
@@ -349,14 +296,14 @@ $(function() {
 
 	/* options start */
 	forecast.main.temp.on('click', function () { prefs.switchUnits() });
-		prefs.unitElement.on('click', function() {prefs.switchUnits()});
-		prefs.locationElement.on('click', _ame.interface.switch);
+	prefs.unitElement.on('click', function() { prefs.switchUnits() });
+	prefs.locationElement.on('click', function () { view.switch() });
 	/* options end */
 
 	/* ui start */
-		$(window).on('resize', _ame.interface.orient);
-		$('.ame-pref-toggle').on('click', _ame.interface.togglePreferences);
-		$('.ame-contacts-toggle').on('click', _ame.interface.toggleContacts);
+	$(window).on('resize', function () { view.orient() });
+	$('.ame-pref-toggle').on('click', function () { view.togglePreferences() });
+	$('.ame-contacts-toggle').on('click', function () { view.toggleContacts() });
 	/* ui end */
 
 	/* const locito = '&id=361058';
