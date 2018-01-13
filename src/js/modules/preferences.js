@@ -40,6 +40,8 @@ class Preferences {
 			this.current.unit = 'c';
 		}
 
+		this.updateUnit();
+
 		// update temprature units
 		const unit = this.current.unit;
 		forecast.main.temp.text(forecast.data.main.temp[unit]);
@@ -56,6 +58,11 @@ class Preferences {
 
 	updateLocation(id) {
 		this.current.location = id;
+		this.save();
+	}
+
+	updateUnit() {
+		this.unitElement.text(`Unit: \u00b0${this.current.unit}`);
 		this.save();
 	}
 }
