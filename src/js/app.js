@@ -186,7 +186,7 @@ const getLocation = function(e) {
 			timeout: 30000,
 			maximumAge: 0
 		};
-		navigator.geolocation.getCurrentPosition(getWeather, _ame.locationError, locationOptions);
+		navigator.geolocation.getCurrentPosition(forecast.get, _ame.locationError, locationOptions);
 	}
 	else {
 		errorHandler('getLocation not supported');
@@ -211,13 +211,13 @@ const fromInput = function(event) {
 	event.preventDefault();
 	const loc = $(this).attr('data-id');
 	console.log('location: ' + loc);
-	getWeather(loc, true);
+	forecast.get(loc, true);
 	_ame.manual.input.val('');
 	_ame.manual.list.hide();
 };
 
-const getWeather = (location, noGeo) => {
-	if (noGeo === undefined) { /* location is a geolocation object */
+/* const getWeather = (location, noGeo) => {
+	if (noGeo === undefined) { // location is a geolocation object
 		const lat = location.coords.latitude;
 		const lon = location.coords.longitude;
 		location = {
@@ -254,7 +254,7 @@ const getWeather = (location, noGeo) => {
 			errorHandler('Request Failed: ' + err, true);
 		}
 	});
-};
+}; */
 
 $(function() {
 	view.orient();
@@ -267,7 +267,7 @@ $(function() {
 		if (typeof loc === 'number') { // double check prefs were loaded from localstorage
 			console.log('using locally saved location: ' + loc);
 			if ( checkDifference() ) {
-				getWeather(loc, true);
+				forecast.get(loc, true);
 			}
 			else {
 				console.log('loading weather from localStorage');
@@ -276,7 +276,7 @@ $(function() {
 					view.switch();
 				}
 				else { // get new data from server, because an error occured while loading data from localStorage
-					getWeather(loc, true);
+					forecast.get(loc, true);
 				}
 			}
 		}
@@ -305,9 +305,6 @@ $(function() {
 	$('.ame-pref-toggle').on('click', function () { view.togglePreferences() });
 	$('.ame-contacts-toggle').on('click', function () { view.toggleContacts() });
 	/* ui end */
-
-	/* const locito = '&id=361058';
-	getWeather(locito, true); */
 });
 
 }());

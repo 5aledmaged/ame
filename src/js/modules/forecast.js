@@ -2,6 +2,7 @@ import $ from 'jquery';
 import prefs from './preferences';
 import * as storage from './storage';
 import errorHandler from './error-handler';
+import view from './view';
 
 class Forecast {
 	constructor() {
@@ -29,6 +30,46 @@ class Forecast {
 			icon: $('.day-panel .data-column img'),
 			time: $('.day-panel .data-column .time'),
 		};
+	}
+
+	get(location, noGeo) {
+		if (noGeo === undefined) { /* location is a geolocation object */
+			const lat = location.coords.latitude;
+			const lon = location.coords.longitude;
+			location = {
+				loc: JSON.stringify({ lat, lon })
+			};
+		}
+		else if (noGeo === true) {
+			const id = location;
+			location = {
+				loc: JSON.stringify({ id })
+			};
+		}
+
+		$.ajax({
+			url: '/api',
+			method: 'POST',
+			data: location,
+			success: (res, textStatus) => {
+				if (textStatus === 'success') {
+					forecast.data = res; // save response to forecast
+					forecast.update(); // update forecast panels
+					view.switch(); // switch to forecast view
+
+					prefs.updateLocation(res.id); // update location id and save locally
+					forecast.save(); // save new forecast data locally
+					storage.save('lastCall', Date.now());	// update lastCall
+				}
+				else {
+					errorHandler('server responded with an error', true);
+				}
+			},
+			error: (jqxhr, textStatus, error) => {
+				const err = textStatus + ', ' + error;
+				errorHandler('Request Failed: ' + err, true);
+			}
+		});
 	}
 
 	update() {
