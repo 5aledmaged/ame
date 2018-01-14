@@ -8,6 +8,7 @@ import * as storage from './modules/storage';
 import prefs from './modules/preferences';
 import forecast from './modules/forecast';
 import view from './modules/view';
+import manual from './modules/manual';
 
 /* main object containing app state */
 let _ame = {
@@ -25,134 +26,6 @@ let _ame = {
 				break;
 		}
 		errorHandler('error: ' + m, true);
-	},
-	manual: {
-		form: $('.ame-manual'),
-		label: $('.ame-manual label'),
-		input: $('input[name=location]'),
-		list: $('.ame-loc-match'),
-		loader: $('.ame-manual-loader'),
-		country: [],
-		selectedCountry: 'none',
-		city: [],
-		initialSetup: function _ameManualInitialSetup() {
-			_ame.manual.list.on('mouseenter', function () {
-				console.log('hovering over this thing');
-				_ame.manual.input.blur();
-			})
-			.on('mouseleave', function () {
-				console.log('getting out of this thing');
-				_ame.manual.input.focus();
-			});
-		},
-		setup: function _ameManualSetup() {
-			// set loader width to equal label + input
-			console.log(_ame.manual.form.outerWidth());
-			_ame.manual.loader.width(_ame.manual.form.outerWidth());
-			_ame.manual.hide(); // hidden by default
-			_ame.manual.list.hide(); // hide the list initially
-		},
-		listSetup: function _ameManualListSetup() {
-			//const w = $('body').width();
-			const el = _ame.manual.list;
-			let elWidth, elLeft;
-			const elHeight = Math.floor($('html').outerHeight() - _ame.manual.input.offset().top - _ame.manual.input.outerHeight());
-			if ($('html').hasClass('landscape')) {
-				elWidth = Math.floor(_ame.manual.input.outerWidth());
-				elLeft = Math.floor( _ame.manual.input.offset().left - _ame.manual.form.offset().left - parseInt(_ame.manual.form.css('padding-left'), 10) );
-				console.log(elHeight);
-			}
-			else {
-				// const form = _ame.manual.form;
-				elWidth = _ame.manual.input.outerWidth();
-				elLeft = 0 /* parseInt(form.css('padding-left'), 10) */;
-			}
-			el.css({
-				width: elWidth,
-				height: elHeight,
-				left: elLeft
-			});
-			el.html('');
-		},
-		show: function _ameManualShow() {
-			_ame.manual.form.show();
-			_ame.manual.loader.hide();
-		},
-		hide: function _ameManualHide() {
-			_ame.manual.form.hide();
-			_ame.manual.loader.show();
-		},
-		loadCountry: function _ameManualLoadCountry() {
-			$.getJSON('/data/country.json', function (data) {
-				_ame.manual.country = data;
-				console.log('load country success', _ame.manual.country);
-				_ame.manual.input.on('keyup change', _ame.manual.country, _ame.manual.populate);
-				_ame.manual.show();
-				_ame.manual.listSetup();
-			})
-			.fail(function (err) {
-				errorHandler('loading country list error' + err, true);
-			});
-		},
-		loadCity: function _ameManualLoadCity() {
-			console.log('event fireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed!');
-			_ame.manual.hide();
-			const el = $(this);
-			const id = el.attr('data-id');
-			_ame.manual.selectedCountry = el.text();
-			console.log('selected country: ' + _ame.manual.selectedCountry);
-			$.ajax('/cities', {
-				type: 'POST',
-				data: 'id=' + id,
-				success: function _ameManualLoadCitySuccess(data) {
-					_ame.manual.city = data;
-					console.log('success for post request');
-					console.log(_ame.manual.city);
-					_ame.manual.input.val('').attr('placeholder', 'enter city, state or region');
-					_ame.manual.label.text(_ame.manual.selectedCountry + ':');
-					_ame.manual.setup();
-					_ame.manual.list.off('click', 'a', _ame.manual.loadCity)
-									.on('click', 'a', fromInput);
-					_ame.manual.input	.off('keyup change')
-										.on('keyup change', _ame.manual.city, _ame.manual.populate);
-					_ame.manual.show();
-					_ame.manual.listSetup();
-					_ame.manual.input.focus();
-				},
-				error  : function _ameManualLoadCityError(jqXHR, status, error) {
-					errorHandler('load city error\njqXHR: '+ jqXHR +'\nstatus: '+ status +'\nerror: '+ error, true);
-				}
-			});
-		},
-		filter: function _ameManualFilter(key, data) {
-			return data.filter(function(place) {
-				const regex = new RegExp(key, 'gi');
-				return place[0].match(regex);
-			});
-		},
-		populate: function _ameManualPopulate(ev) {
-			const data = ev.data;
-			const key = $(this).val();
-			if (key) {
-				let match = _ame.manual.filter(key, data);
-				let matchHtml = $.map(match, place => {
-					// const re = new RegExp(key, 'gi');
-					// const hl = place[0].replace(re, `<span class="hl">${key}</span>`);
-					return `<li><a data-id="${place[1]}">${place[0]}</a>`;
-				})/*.slice(0, 50)*/;
-				if (matchHtml.length === 0) {
-					const noMatch = `<li>no match found!</li>`;
-					_ame.manual.list.html(noMatch);
-				}
-				else {
-					_ame.manual.list.html(matchHtml);
-				}
-				_ame.manual.list.show();
-			}
-			else {
-				_ame.manual.list.hide();
-			}
-		}
 	}
 };
 
@@ -188,20 +61,11 @@ const checkDifference = function() {
 	return (mnts >= 10) ? true : false;
 };
 
-const fromInput = function(event) {
-	event.preventDefault();
-	const loc = $(this).attr('data-id');
-	console.log('location: ' + loc);
-	forecast.get(loc, true);
-	_ame.manual.input.val('');
-	_ame.manual.list.hide();
-};
-
 $(function() {
 	view.orient();
-	_ame.manual.initialSetup();
-	_ame.manual.setup();
-	_ame.manual.loadCountry();
+	// manual.initialSetup();
+	manual.setup();
+	manual.loadCountry();
 
 	if ( prefs.load() ) {
 		const loc = prefs.current.location;
@@ -229,10 +93,12 @@ $(function() {
 		view.locationButton.on('click', getLocation);
 
 	/* manual location input start */
-		_ame.manual.input.on('keypress', function(e) {
+		manual.input.on('keypress', function(e) {
 			if (e.keyCode === 13) e.preventDefault();
 		});
-		_ame.manual.list.on('click', 'a', _ame.manual.loadCity);
+		manual.list.on('click', 'a', function(event) {
+			manual.loadCity.call(this, event, manual);
+		});
 	/* manual location input end */
 
 	/* options start */
