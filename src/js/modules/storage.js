@@ -2,14 +2,12 @@ import errorHandler from './error-handler';
 
 export function load(key) {
 	if (window.localStorage) {
-		try {
-			const data = localStorage.loadItem(key);
-			return data;
-		}
-		catch (e) {
-			errorHandler(e);
-			return false;
-		}
+		/*
+			Storage.getItem(key) doesn't throw an exception,
+			if key is not found it returns null
+		*/
+		const data = localStorage.getItem(key);
+		return data === null ? false : data; // getItem returns null if key isn't found
 	}
 	else {
 		errorHandler('localStorage not supported');
