@@ -10,44 +10,7 @@ import forecast from './modules/forecast';
 import view from './modules/view';
 import manual from './modules/manual';
 
-/* main object containing app state */
-let _ame = {
-	locationError: function _ameLocationError(e) {
-		let m = 'location error';
-		switch (e.code) {
-			case 1:
-				m = 'user denied permision, please allow app to access your location or enter your location manually.';
-				break;
-			case 2:
-				m = 'location is unavailable, make sure you\'re connected to the internet. if the problem presists, enter your location manually or try again later.';
-				break;
-			case 3:
-				m = 'browser is taking too long to respond, please enter your location manually or try again later.';
-				break;
-		}
-		errorHandler('error: ' + m, true);
-	}
-};
-
-const getLocation = function(e) {
-	e.preventDefault();
-	console.log('getLocation called');
-
-	if (navigator.geolocation) {
-		console.log('getLocation supported');
-		let locationOptions = {
-			enableHighAccuracy: true,
-			timeout: 30000,
-			maximumAge: 0
-		};
-		navigator.geolocation.getCurrentPosition(forecast.get, _ame.locationError, locationOptions);
-	}
-	else {
-		errorHandler('getLocation not supported');
-	}
-};
-
-const checkDifference = function() {
+const checkDifference = () => {
 	let mnts = 10;
 	let lastCall = storage.load('lastCall');
 

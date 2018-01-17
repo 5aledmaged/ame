@@ -67,7 +67,7 @@ class Forecast {
 			},
 			error: (jqxhr, textStatus, error) => {
 				const err = textStatus + ', ' + error;
-				errorHandler('Request Failed: ' + err, true);
+				errorHandler(`Request Failed: ${err}`, true);
 			}
 		});
 	}
@@ -133,6 +133,35 @@ class Forecast {
 		else {
 			errorHandler('forecast wasn\'t loaded from localStorage');
 			return false;
+		}
+	}
+
+	geo(event) {
+		event.preventDefault();
+		console.log('forecast.geo called');
+
+		if (navigator.geolocation) {
+			console.log('geolocation supported');
+
+			const locationError = error => {
+				const errorMessege = {
+					0: 'user denied permision, please allow app to access your location or enter your location manually.',
+					1: 'location is unavailable, make sure you\'re connected to the internet. if the problem presists, enter your location manually or try again later.',
+					2: 'browser is taking too long to respond, please enter your location manually or try again later.'
+				};
+				errorHandler(`error: ${errorMessege[error.code]}`, true);
+			};
+
+			const locationOptions = {
+				enableHighAccuracy: true,
+				timeout: 30000,
+				maximumAge: 0
+			};
+
+			navigator.geolocation.getCurrentPosition(forecast.get, locationError, locationOptions);
+		}
+		else {
+			errorHandler('geolocation not supported');
 		}
 	}
 }
