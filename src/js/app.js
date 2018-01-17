@@ -55,14 +55,14 @@ $(function() {
 		view.locationButton.on('click', forecast.geo);
 
 	/* options start */
-	forecast.main.temp.on('click', function () { prefs.switchUnits() });
-	prefs.unitElement.on('click', function() { prefs.switchUnits() });
-	prefs.locationElement.on('click', function () { view.switch() });
+		forecast.main.temp.on('click', function () { prefs.switchUnits() });
+		prefs.unitElement.on('click', function() { prefs.switchUnits() });
+		prefs.locationElement.on('click', function () { view.switch(); manual.setupCountry(); });
 	/* options end */
 
 	/* ui start */
-	$(window).on('resize', function () { view.orient() });
-	$('.ame-pref-toggle').on('click', function () { view.togglePreferences() });
-	$('.ame-contacts-toggle').on('click', function () { view.toggleContacts() });
+		$(window).on('resize', function () { view.orient() });
+		$('.ame-pref-toggle').on('click', function () { view.togglePreferences() });
+		$('.ame-contacts-toggle').on('click', function () { view.toggleContacts() });
 	/* ui end */
 });

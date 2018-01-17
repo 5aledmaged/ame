@@ -86,6 +86,20 @@ class Manual {
 		});
 	}
 
+	setupCountry() { // setup country input when user wants to change location preferences
+		const that = this;
+		this.label.text('Enter a country:');
+		this.input.val('').attr('placeholder', 'enter a country');
+		this.input.off('keyup change')
+		this.input.on('keyup change', this.country, function (event) {
+			that.populate.call(this, event, that);
+		});
+		this.list.off('click', 'a')
+		.on('click', 'a', function (event) {
+			that.loadCity.call(this, event, that);
+		});
+	}
+
 	loadCity(event, that) {
 		console.log('event fireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed!');
 		that.hide();
