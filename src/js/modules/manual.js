@@ -10,7 +10,7 @@ class Manual {
 		this.list = $('.ame-loc-match');
 		this.loader = $('.ame-manual-loader');
 		this.country = [];
-		this.selectedCountry = 'none';
+		this.selectedCountry = null;
 		this.city = [];
 
 		const that = this;
@@ -21,6 +21,10 @@ class Manual {
 		.on('mouseleave', function () {
 			console.log('getting out of this thing');
 			that.input.focus();
+		});
+
+		this.input.on('keypress', function (e) {
+			if (e.keyCode === 13) e.preventDefault();
 		});
 	}
 
@@ -33,19 +37,17 @@ class Manual {
 	}
 
 	listSetup() {
-		//const w = $('body').width();
 		const el = this.list;
 		let elWidth, elLeft;
 		const elHeight = Math.floor($('html').outerHeight() - this.input.offset().top - this.input.outerHeight());
 		if ($('html').hasClass('landscape')) {
 			elWidth = Math.floor(this.input.outerWidth());
-			elLeft = Math.floor(this.input.offset().left - this.form.offset().left - parseInt(this.form.css('padding-left'), 10));
+			elLeft = Math.floor(this.input.offset().left - this.form.offset().left - Number.parseInt(this.form.css('padding-left'), 10));
 			console.log(elHeight);
 		}
 		else {
-			// const form = this.form;
 			elWidth = this.input.outerWidth();
-			elLeft = 0 /* parseInt(form.css('padding-left'), 10) */;
+			elLeft = 0;
 		}
 		el.css({
 			width: elWidth,
@@ -72,6 +74,9 @@ class Manual {
 			console.log('load country success', that.country);
 			that.input.on('keyup change', that.country, function (event) {
 				that.populate.call(this, event, that);
+			});
+			that.list.on('click', 'a', function (event) {
+				that.loadCity.call(this, event, that);
 			});
 			that.show();
 			that.listSetup();

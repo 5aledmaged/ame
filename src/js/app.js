@@ -3,7 +3,6 @@ import '../css/styles.less';
 import $ from 'jquery';
 import Raven from 'raven-js';
 Raven.config('https://d581b40eda8a444a928b39d898380a05@sentry.io/212857').install();
-import errorHandler from './modules/error-handler';
 import * as storage from './modules/storage';
 import prefs from './modules/preferences';
 import forecast from './modules/forecast';
@@ -26,7 +25,6 @@ const checkDifference = () => {
 
 $(function() {
 	view.orient();
-	// manual.initialSetup();
 	manual.setup();
 	manual.loadCountry();
 
@@ -43,26 +41,18 @@ $(function() {
 					forecast.update();
 					view.switch();
 				}
-				else { // get new data from server, because an error occured while loading data from localStorage
+				else { // get new data from server; error loading data from localStorage
 					forecast.get(loc, true);
 				}
 			}
 		}
 	}
 
-	/* Event Listeners
-	========================================= */
+	/* ==============================================================================================
+		Event Listeners
+	============================================================================================== */
 	/* core functionality */
-		view.locationButton.on('click', getLocation);
-
-	/* manual location input start */
-		manual.input.on('keypress', function(e) {
-			if (e.keyCode === 13) e.preventDefault();
-		});
-		manual.list.on('click', 'a', function(event) {
-			manual.loadCity.call(this, event, manual);
-		});
-	/* manual location input end */
+		view.locationButton.on('click', forecast.geo);
 
 	/* options start */
 	forecast.main.temp.on('click', function () { prefs.switchUnits() });
