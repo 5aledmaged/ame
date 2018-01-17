@@ -19,6 +19,7 @@ class Preferences {
 		if (localPrefs) {
 			localPrefs = JSON.parse(localPrefs);
 			Object.assign(this.current, localPrefs);
+			this.updateUnitText();
 			console.log('successfully loaded preferences from localstorage');
 			return true;
 		}
@@ -62,8 +63,12 @@ class Preferences {
 		this.save();
 	}
 
-	updateUnit() {
+	updateUnitText() {
 		this.unitElement.text(`Unit: \u00b0${this.current.unit}`);
+	}
+
+	updateUnit() {
+		this.updateUnitText();
 		this.save();
 		note.send(`<strong>changed default unit to &deg;${this.current.unit}</strong><br>prefereces saved`);
 	}
