@@ -9,6 +9,19 @@ import apiRouter from './modules/apiRouter';
 const ame = express();
 const port = process.env.PORT || 5000;
 
+const env = process.env.NODE_ENV || 'development';
+// force redirection to https version
+if (env === 'production') {
+	ame.use((req, res, next) => {
+		if (req.get('x-forwarded-proto') !== 'https') {
+			res.redirect(`https://${req.get('host')}${req.url}`);
+		}
+		else {
+			next();
+		}
+	});
+}
+
 ame.use(cors());
 ame.use(compression());
 ame.use(bodyParser.urlencoded({ extended: true }));
