@@ -19,7 +19,10 @@ apiRouter.route('/')
 		const sendResponse = forecast => {
 			res.json(forecast);
 		};
-		forecastLoader(loc, sendResponse);
+		const sendError = reason => {
+			res.status(500).send(reason);
+		};
+		forecastLoader(loc, sendResponse, sendError);
 	});
 
 export default apiRouter;

@@ -1,6 +1,6 @@
 import rp from 'request-promise-native';
 
-const forecastLoader = (location, callback) => {
+const forecastLoader = (location, successCallback, errorCallback) => {
 		if (typeof location === 'undefined') {
 			return console.error('location object is undefined');
 		}
@@ -79,18 +79,26 @@ const forecastLoader = (location, callback) => {
 			rp(options.main),
 			rp(options.hourly),
 			rp(options.daily)
-		]).then(res => {
+		])
+		.then(res => {
 			const mainForecast = JSON.parse(res[0]);
 			const hourlyForecast = JSON.parse(res[1]);
 			const dailyForecast = JSON.parse(res[2]);
 			processMainForecast(mainForecast);
 			processHourlyForecast(hourlyForecast);
 			processDailyForecast(dailyForecast);
-			if (callback && typeof callback === 'function') {
-				callback(forecast);
+			if (successCallback && typeof successCallback === 'function') {
+				successCallback(forecast);
 			}
 			else {
-				console.error('callback is not provided');
+				console.error('successCallback is not provided');
+			}
+		}, reason => {
+			if (errorCallback && typeof errorCallback === 'function') {
+				errorCallback(reason);
+			}
+			else {
+				console.error('errorCallback is not provided');
 			}
 		});
 
