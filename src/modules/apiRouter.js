@@ -20,6 +20,7 @@ apiRouter.route('/')
 			res.json(forecast);
 		};
 		const sendError = reason => {
+			console.error(reason);
 			res.status(500).send(reason);
 		};
 		forecastLoader(loc, sendResponse, sendError);

@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import moment from 'moment-timezone';
+import tz from 'tz-lookup';
 import prefs from './preferences';
 import * as storage from './storage';
 import errorHandler from './error-handler';
@@ -73,6 +75,10 @@ class Forecast {
 	}
 
 	update() {
+		// get location's time zone
+		const coords = this.data.coords;
+		const timeZone = tz(coords.lat, coords.lon);
+
 		const unit = prefs.current.unit;
 		/* update main forecast */
 		let forecastData = this.data.main; // set forecast to main forecast data
@@ -95,7 +101,8 @@ class Forecast {
 			$(column).attr('src', 'img/icons/' + forecastData[i].icon + '.svg');
 		});
 		panel.time.each(function (i, column) {
-			$(column).text(forecastData[i].time);
+			const forecastMoment = moment.tz(forecastData[i].time*1000, timeZone);
+			$(column).text( forecastMoment.format('HH:mm') );
 		});
 
 
@@ -113,7 +120,8 @@ class Forecast {
 			$(column).attr('src', 'img/icons/' + forecastData[i].icon + '.svg');
 		});
 		panel.time.each(function (i, column) {
-			$(column).text(forecastData[i].time);
+			const forecastMoment = moment.tz(forecastData[i].time * 1000, timeZone);
+			$(column).text(forecastMoment.format('DD/MM'));
 		});
 	}
 
@@ -140,14 +148,14 @@ class Forecast {
 		event.preventDefault();
 		console.log('forecast.geo called');
 
-		if (navigator.geolocation) {
+		if ('geolocation' in navigator) {
 			console.log('geolocation supported');
 
 			const locationError = error => {
 				const errorMessege = {
-					0: 'user denied permision, please allow app to access your location or enter your location manually.',
+					0: 'user denied permision, please give app location access, or enter a location manually.',
 					1: 'location is unavailable, make sure you\'re connected to the internet. if the problem presists, enter your location manually or try again later.',
-					2: 'browser is taking too long to respond, please enter your location manually or try again later.'
+					2: 'browser is taking too long to respond, please enter a location manually, or try again later.'
 				};
 				errorHandler(`error: ${errorMessege[error.code]}`, true);
 			};

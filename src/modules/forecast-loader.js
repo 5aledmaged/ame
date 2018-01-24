@@ -49,6 +49,7 @@ const forecastLoader = (location, successCallback, errorCallback) => {
 				time: new Date()
 			};
 			forecast.id = res.id;	// city id
+			forecast.coords = res.coord; // city location coordinates
 		};
 
 		const processHourlyForecast = res => {
@@ -56,21 +57,20 @@ const forecastLoader = (location, successCallback, errorCallback) => {
 				forecast.hourly[i] = {
 					temp: processTemprature(res.list[i].main.temp),
 					icon: res.list[i].weather[0].icon,
-					time: res.list[i].dt_txt.split(' ')[1].substr(0, 5)
+					time: res.list[i].dt
 				};
 			}
 		};
 
 		const processDailyForecast = res => {
 			for (let i = 0; i <= 3; i++) { /* save forecast for next 4 days only */
-				const date = new Date(res.list[i+1].dt * 1000);
 				forecast.daily[i] = {
 					temp: {
-						min: processTemprature(res.list[i + 1].temp.min),
-						max: processTemprature(res.list[i + 1].temp.max)
+						min: processTemprature(res.list[i+1].temp.min),
+						max: processTemprature(res.list[i+1].temp.max)
 					},
 					icon: res.list[i+1].weather[0].icon,
-					time: date.getDate() + '/' + (date.getMonth() + 1)
+					time: res.list[i+1].dt
 				};
 			}
 		};
